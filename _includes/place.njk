@@ -1,0 +1,146 @@
+---
+layout: base.njk
+---
+<article class="place-page">
+
+    <!-- PLACE HERO -->
+    <section class="place-hero">
+        <div class="container">
+
+            <div class="place-hero-image">
+                <img src="{{ image }}" alt="{{ title }}">
+            </div>
+
+            <div class="place-hero-content">
+
+                <div class="place-meta">
+                    <span>{{ category }}</span>
+                    <span>★★★★★</span>
+                </div>
+
+                <h1>{{ title }}</h1>
+
+                <p class="place-intro">
+                    {{ intro }}
+                </p>
+
+                <button class="save-button" type="button">
+                    ♡ Save
+                </button>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- OVERVIEW -->
+    <section class="place-section">
+        <div class="container place-content">
+
+            <div class="place-section-heading">
+                <span class="eyebrow">THE LOWDOWN</span>
+                <h2>Why visit {{ title }}?</h2>
+            </div>
+
+            <div class="place-section-text">
+                <p>
+                    {{ overview }}
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- HIGHLIGHTS -->
+    <section class="place-section place-section-alt">
+        <div class="container">
+
+            <div class="place-section-heading">
+                <span class="eyebrow">HIGHLIGHTS</span>
+                <h2>Things to see &amp; do</h2>
+            </div>
+
+            <div class="place-highlights">
+
+                {% for highlight in highlights %}
+
+                <div class="place-highlight">
+
+                <div class="place-highlight-image">
+                    <img src="{{ highlight.image }}" alt="{{ highlight.title }}">
+                </div>
+
+                    <div class="place-highlight-content">
+                        <h3>{{ highlight.title }}</h3>
+                        <p>{{ highlight.description }}</p>
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- GOOD TO KNOW -->
+    <section class="place-section">
+        <div class="container place-content">
+
+            <div class="place-section-heading">
+                <span class="eyebrow">GOOD TO KNOW</span>
+                <h2>Before you go</h2>
+            </div>
+
+            <div class="place-info-grid">
+
+                <div class="place-info-card">
+                    <span class="place-info-label">GETTING THERE</span>
+                    <p>{{ getting_there }}</p>
+                </div>
+
+                <div class="place-info-card">
+                    <span class="place-info-label">BEST TIME TO VISIT</span>
+                    <p>{{ best_time }}</p>
+                </div>
+
+                <div class="place-info-card">
+                    <span class="place-info-label">PARKING</span>
+                    <p>{{ parking }}</p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- MAP -->
+    <section class="place-map-section">
+        <div class="container">
+
+            <div class="place-map-placeholder">
+                <span>MAP</span>
+                <p>{{ title }}</p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- BACK TO PLACES -->
+    <section class="place-bottom">
+        <div class="container">
+
+            <a href="/places/" class="back-link">
+                ← Back to places
+            </a>
+
+        </div>
+    </section>
+
+</article>

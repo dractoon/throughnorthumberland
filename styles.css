@@ -967,3 +967,329 @@ button {
         font-size: 11px;
     }
 }
+/* =========================================================
+   PLACE DETAIL PAGES
+   ========================================================= */
+
+.place-hero {
+    padding: 50px 0 75px;
+}
+
+.place-hero-image {
+    aspect-ratio: 16 / 7;
+    overflow: hidden;
+    margin-bottom: 38px;
+    border-radius: 22px;
+}
+
+.place-hero-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.place-hero-content {
+    position: relative;
+    max-width: 900px;
+    padding-right: 150px;
+}
+
+.place-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+.place-hero h1 {
+    margin-bottom: 20px;
+    font-size: clamp(50px, 7vw, 82px);
+    line-height: 0.94;
+    letter-spacing: -0.06em;
+}
+
+.place-intro {
+    max-width: 700px;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+.place-hero-content .save-button {
+    position: absolute;
+    top: 4px;
+    right: 0;
+}
+
+
+/* =========================================================
+   PLACE SECTIONS
+   ========================================================= */
+
+.place-section {
+    padding: 85px 0;
+}
+
+.place-section-alt {
+    background: var(--surface);
+}
+
+.place-content {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 70px;
+    align-items: start;
+}
+
+.place-section-heading .eyebrow {
+    display: block;
+    margin-bottom: 14px;
+    color: var(--green);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+}
+
+.place-section-heading h2 {
+    max-width: 500px;
+    margin: 0;
+    font-size: clamp(34px, 5vw, 54px);
+    line-height: 1;
+    letter-spacing: -0.05em;
+}
+
+.place-section-text {
+    max-width: 680px;
+    padding-top: 3px;
+}
+
+.place-section-text p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.85;
+}
+
+
+/* =========================================================
+   HIGHLIGHTS
+   ========================================================= */
+
+.place-highlights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.place-highlight {
+    min-width: 0;
+}
+
+.place-highlight-image {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    margin-bottom: 18px;
+    border-radius: 18px;
+}
+
+.place-highlight-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.place-highlight-content {
+    padding: 0 2px;
+}
+
+.place-highlight h3 {
+    margin-bottom: 8px;
+    font-size: 22px;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+}
+
+.place-highlight p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   GOOD TO KNOW
+   ========================================================= */
+
+.place-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 50px;
+}
+
+.place-info-card {
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--background);
+}
+
+.place-info-label {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--green);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+.place-info-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   MAP
+   ========================================================= */
+
+.place-map-section {
+    padding: 0 0 85px;
+}
+
+.place-map-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 360px;
+    border-radius: 22px;
+    background: var(--green-light);
+    color: var(--green);
+    text-align: center;
+}
+
+.place-map-placeholder span {
+    margin-bottom: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+}
+
+.place-map-placeholder p {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+}
+
+
+/* =========================================================
+   BACK LINK
+   ========================================================= */
+
+.place-bottom {
+    padding: 0 0 85px;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--dark);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    color: var(--green);
+}
+
+
+/* =========================================================
+   PLACE PAGE RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .place-content {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .place-highlights {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .place-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .place-hero-content {
+        padding-right: 130px;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .place-hero {
+        padding: 30px 0 60px;
+    }
+
+    .place-hero-image {
+        aspect-ratio: 4 / 3;
+        margin-bottom: 30px;
+        border-radius: 16px;
+    }
+
+    .place-hero-content {
+        padding-right: 0;
+    }
+
+    .place-hero h1 {
+        font-size: 54px;
+    }
+
+    .place-intro {
+        font-size: 15px;
+    }
+
+    .place-hero-content .save-button {
+        position: static;
+        margin-top: 25px;
+    }
+
+    .place-section {
+        padding: 65px 0;
+    }
+
+    .place-highlights {
+        grid-template-columns: 1fr;
+        gap: 35px;
+    }
+
+    .place-info-grid {
+        margin-top: 35px;
+    }
+
+    .place-map-section {
+        padding-bottom: 65px;
+    }
+
+    .place-map-placeholder {
+        min-height: 280px;
+        border-radius: 16px;
+    }
+
+    .place-bottom {
+        padding-bottom: 65px;
+    }
+}
