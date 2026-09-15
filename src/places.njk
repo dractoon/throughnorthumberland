@@ -83,338 +83,49 @@ permalink: /places/
 
                 <div class="places-grid">
 
+                    {% for key, place in places %}
+                        {% if place.status == "published" %}
+                            <article class="places-card">
 
-                    <!-- BAMBURGH -->
+                                <a href="/places/{{ key }}/" class="places-card-link">
 
-                    <article class="places-card">
+                                    <div class="places-card-image">
 
-                        <div class="places-card-image placeholder-image">
+                                        <img
+                                            src="{{ place.image }}"
+                                            alt="{{ place.title }}"
+                                        >
 
-                            <span>Photo</span>
+                                        <button
+                                            class="save-button"
+                                            type="button"
+                                            aria-label="Save {{ place.title }}"
+                                        >
+                                            ♡
+                                        </button>
 
-                            <button
-                                class="save-button"
-                                aria-label="Save Bamburgh"
-                            >
-                                ♡
-                            </button>
+                                    </div>
 
-                        </div>
+                                    <div class="places-card-content">
 
-                        <div class="places-card-content">
+                                        <div class="places-card-meta">
+                                            <span>{{ place.category }}</span>
+                                            <span>★★★★★</span>
+                                        </div>
 
-                            <div class="places-card-meta">
-                                <span>COAST</span>
-                                <span>★★★★★</span>
-                            </div>
+                                        <h2>{{ place.title }}</h2>
 
-                            <h2>Bamburgh</h2>
+                                        <p>
+                                            {{ place.intro }}
+                                        </p>
 
-                            <p>
-                                A spectacular coastal village dominated by
-                                its famous castle and backed by miles of beach.
-                            </p>
+                                    </div>
 
-                        </div>
+                                </a>
 
-                    </article>
-
-
-
-                    <!-- CRaster -->
-
-                    <article class="places-card">
-
-                        <div class="places-card-image placeholder-image">
-
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Craster"
-                            >
-                                ♡
-                            </button>
-
-                        </div>
-
-                        <div class="places-card-content">
-
-                            <div class="places-card-meta">
-                                <span>COAST</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h2>Craster</h2>
-
-                            <p>
-                                A traditional fishing village and the starting
-                                point for the spectacular walk to Dunstanburgh Castle.
-                            </p>
-
-                        </div>
-
-                    </article>
-
-
-
-                    <!-- ALNWICK -->
-
-                    <article class="places-card">
-
-                        <div class="places-card-image placeholder-image">
-
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Alnwick"
-                            >
-                                ♡
-                            </button>
-
-                        </div>
-
-                        <div class="places-card-content">
-
-                            <div class="places-card-meta">
-                                <span>TOWN</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h2>Alnwick</h2>
-
-                            <p>
-                                A historic market town famous for its castle,
-                                gardens and attractive streets.
-                            </p>
-
-                        </div>
-
-                    </article>
-
-
-
-                    <!-- WARKWORTH -->
-
-                    <article class="places-card">
-
-                        <div class="places-card-image placeholder-image">
-
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Warkworth"
-                            >
-                                ♡
-                            </button>
-
-                        </div>
-
-                        <div class="places-card-content">
-
-                            <div class="places-card-meta">
-                                <span>VILLAGE</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h2>Warkworth</h2>
-
-                            <p>
-                                A beautiful riverside village with a dramatic
-                                medieval castle overlooking the River Coquet.
-                            </p>
-
-                        </div>
-
-                    </article>
-
-
-
-                    <!-- SEAHOUSES -->
-
-                    <article class="places-card">
-
-                        <div class="places-card-image placeholder-image">
-
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Seahouses"
-                            >
-                                ♡
-                            </button>
-
-                        </div>
-
-                        <div class="places-card-content">
-
-                            <div class="places-card-meta">
-                                <span>COAST</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h2>Seahouses</h2>
-
-                            <p>
-                                A lively coastal village and gateway to boat
-                                trips around the Farne Islands.
-                            </p>
-
-                        </div>
-
-                    </article>
-
-
-
-                    <!-- HEXHAM -->
-
-                    <article class="places-card">
-
-                        <div class="places-card-image placeholder-image">
-
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Hexham"
-                            >
-                                ♡
-                            </button>
-
-                        </div>
-
-                        <div class="places-card-content">
-
-                            <div class="places-card-meta">
-                                <span>TOWN</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h2>Hexham</h2>
-
-                            <p>
-                                A historic market town in the Tyne Valley,
-                                known for its abbey and beautiful surroundings.
-                            </p>
-
-                        </div>
-
-                    </article>
-
-
-
-                    <!-- ROTHBURY -->
-
-                    <article class="places-card">
-
-                        <div class="places-card-image placeholder-image">
-
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Rothbury"
-                            >
-                                ♡
-                            </button>
-
-                        </div>
-
-                        <div class="places-card-content">
-
-                            <div class="places-card-meta">
-                                <span>COUNTRYSIDE</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h2>Rothbury</h2>
-
-                            <p>
-                                A peaceful market town surrounded by the
-                                hills and landscapes of Coquetdale.
-                            </p>
-
-                        </div>
-
-                    </article>
-
-
-
-                    <!-- BERWICK -->
-
-                    <article class="places-card">
-
-                        <div class="places-card-image placeholder-image">
-
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Berwick-upon-Tweed"
-                            >
-                                ♡
-                            </button>
-
-                        </div>
-
-                        <div class="places-card-content">
-
-                            <div class="places-card-meta">
-                                <span>HISTORIC</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h2>Berwick-upon-Tweed</h2>
-
-                            <p>
-                                England's northernmost town, surrounded by
-                                impressive Elizabethan walls and coastal scenery.
-                            </p>
-
-                        </div>
-
-                    </article>
-
-
-
-                    <!-- CORBRIDGE -->
-
-                    <article class="places-card">
-
-                        <div class="places-card-image placeholder-image">
-
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Corbridge"
-                            >
-                                ♡
-                            </button>
-
-                        </div>
-
-                        <div class="places-card-content">
-
-                            <div class="places-card-meta">
-                                <span>VILLAGE</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h2>Corbridge</h2>
-
-                            <p>
-                                A picturesque village close to Hadrian's Wall,
-                                filled with independent shops, cafés and history.
-                            </p>
-
-                        </div>
-
-                    </article>
-
+                            </article>
+                        {% endif %}
+                    {% endfor %}
 
                 </div>
 

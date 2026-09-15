@@ -1,6 +1,7 @@
 ---
 layout: base.njk
 ---
+{% set place_data = places[place] %}
 <article class="place-page">
 
     <!-- PLACE HERO -->
@@ -8,20 +9,20 @@ layout: base.njk
         <div class="container">
 
             <div class="place-hero-image">
-                <img src="{{ image }}" alt="{{ title }}">
+                <img src="{{ place_data.image }}" alt="{{ place_data.title }}">
             </div>
 
             <div class="place-hero-content">
 
                 <div class="place-meta">
-                    <span>{{ category }}</span>
+                    <span>{{ place_data.category }}</span>
                     <span>★★★★★</span>
                 </div>
 
-                <h1>{{ title }}</h1>
+                <h1>{{ place_data.title }}</h1>
 
                 <p class="place-intro">
-                    {{ intro }}
+                    {{ place_data.intro }}
                 </p>
 
                 <button class="save-button" type="button">
@@ -40,12 +41,12 @@ layout: base.njk
 
             <div class="place-section-heading">
                 <span class="eyebrow">THE LOWDOWN</span>
-                <h2>Why visit {{ title }}?</h2>
+                <h2>Why visit {{ place_data.title }}?</h2>
             </div>
 
             <div class="place-section-text">
                 <p>
-                    {{ overview }}
+                    {{ place_data.overview }}
                 </p>
             </div>
 
@@ -64,7 +65,7 @@ layout: base.njk
 
             <div class="place-highlights">
 
-                {% for highlight in highlights %}
+                {% for highlight in place_data.highlights %}
 
                 <div class="place-highlight">
 
@@ -100,17 +101,17 @@ layout: base.njk
 
                 <div class="place-info-card">
                     <span class="place-info-label">GETTING THERE</span>
-                    <p>{{ getting_there }}</p>
+                    <p>{{ place_data.getting_there }}</p>
                 </div>
 
                 <div class="place-info-card">
                     <span class="place-info-label">BEST TIME TO VISIT</span>
-                    <p>{{ best_time }}</p>
+                    <p>{{ place_data.best_time }}</p>
                 </div>
 
                 <div class="place-info-card">
                     <span class="place-info-label">PARKING</span>
-                    <p>{{ parking }}</p>
+                    <p>{{ place_data.parking }}</p>
                 </div>
 
             </div>
@@ -125,7 +126,7 @@ layout: base.njk
 
             <div class="place-map-placeholder">
                 <span>MAP</span>
-                <p>{{ title }}</p>
+                <p>{{ place_data.title }}</p>
             </div>
 
         </div>
