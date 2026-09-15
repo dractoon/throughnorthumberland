@@ -1,52 +1,417 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f4f1e9">
-  <meta name="description" content="Through Northumberland — coming soon.">
-  <meta property="og:title" content="Through Northumberland">
-  <meta property="og:description" content="Coming soon.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/through-northumberland-mark.png">
-  <title>Through Northumberland — Coming Soon</title>
-  <link rel="icon" type="image/png" href="assets/through-northumberland-mark.png">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Through Northumberland</title>
+    <meta name="description" content="Discover places, food, walks, beaches and things to do across Northumberland.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <main class="page">
 
-    <section class="hero" aria-labelledby="page-title">
-      <div class="copy">
-        <h1 id="page-title">Coming<br>soon.</h1>
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="container header-inner">
 
-        <div class="rule" aria-hidden="true"></div>
+            <a href="#" class="logo">
 
-        <p class="intro">
-          <strong>Through Northumberland</strong> is on its way — a new place
-          to discover the people, places, food and stories that make
-          Northumberland special.
-        </p>
+                <img
+                    src="assets/logo.png"
+                    alt="Through Northumberland logo"
+                    class="logo-image"
+                >
 
-        <p class="small-note">Something worth exploring is coming.</p>
-      </div>
+                <span>through</span>
+                <strong>northumberland</strong>
 
-      <div class="visual" aria-hidden="true">
-        <div class="visual-card">
-          <img
-            src="assets/through-northumberland-mark.png"
-            alt=""
-          >
+            </a>
+
+            <nav class="desktop-nav">
+                <a href="#">Explore</a>
+                <a href="#">Places</a>
+                <a href="#">Food & Drink</a>
+                <a href="#">Stay</a>
+            </nav>
+
+            <button class="menu-button" aria-label="Open menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
         </div>
-      </div>
-    </section>
+    </header>
 
-    <footer class="footer">
-      <span>Northumberland, England</span>
-      <span class="footer-line"></span>
-      <span>Est. 2026</span>
-    </footer>
-  </main>
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="container">
+
+                <div class="hero-content">
+                    <p class="eyebrow">NORTHUMBERLAND, ENGLAND</p>
+
+                    <h1>
+                        Discover Northumberland
+                        <span>one place at a time.</span>
+                    </h1>
+
+                    <p class="hero-intro">
+                        Find places to explore, eat, stay and experience across England's most northerly county.
+                    </p>
+
+                    <div class="search-box">
+                        <span class="search-icon">⌕</span>
+
+                        <input
+                            type="text"
+                            placeholder="Search places, food, walks..."
+                            aria-label="Search Northumberland"
+                        >
+
+                        <button>Search</button>
+                    </div>
+                </div>
+
+                <div class="hero-image placeholder-image">
+                    <span>Northumberland photograph</span>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- CATEGORIES -->
+        <section class="categories section">
+            <div class="container">
+
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">EXPLORE</p>
+                        <h2>What are you looking for?</h2>
+                    </div>
+                </div>
+
+                <div class="category-grid">
+
+                    <a href="#" class="category-card category-places">
+                        <div class="category-icon">⌂</div>
+
+                        <div>
+                            <h3>Places</h3>
+                            <p>Towns, villages & landmarks</p>
+                        </div>
+                    </a>
+
+
+                    <a href="#" class="category-card category-food">
+                        <div class="category-icon">+</div>
+
+                        <div>
+                            <h3>Food & Drink</h3>
+                            <p>Cafés, restaurants & pubs</p>
+                        </div>
+                    </a>
+
+
+                    <a href="#" class="category-card category-beaches">
+                        <div class="category-icon">≈</div>
+
+                        <div>
+                            <h3>Beaches</h3>
+                            <p>Coastline, sea & sand</p>
+                        </div>
+                    </a>
+
+
+                    <a href="#" class="category-card category-walks">
+                        <div class="category-icon">↗</div>
+
+                        <div>
+                            <h3>Walks</h3>
+                            <p>Trails, hills & countryside</p>
+                        </div>
+                    </a>
+
+
+                    <a href="#" class="category-card category-stay">
+                        <div class="category-icon">□</div>
+
+                        <div>
+                            <h3>Stay</h3>
+                            <p>Hotels, cottages & campsites</p>
+                        </div>
+                    </a>
+
+
+                    <a href="#" class="category-card category-things">
+                        <div class="category-icon">★</div>
+
+                        <div>
+                            <h3>Things to do</h3>
+                            <p>Activities & experiences</p>
+                        </div>
+                    </a>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- FEATURED PLACES -->
+        <section class="featured section">
+            <div class="container">
+
+                <div class="section-heading section-heading-row">
+
+                    <div>
+                        <p class="eyebrow">CURATED FOR YOU</p>
+                        <h2>Places worth knowing</h2>
+                    </div>
+
+                    <a href="#" class="view-all">
+                        View all <span>→</span>
+                    </a>
+
+                </div>
+
+
+                <div class="place-grid">
+
+                    <article class="place-card">
+
+                        <div class="place-image placeholder-image">
+                            <span>Photo</span>
+
+                            <button
+                                class="save-button"
+                                aria-label="Save Bamburgh"
+                            >
+                                ♡
+                            </button>
+                        </div>
+
+                        <div class="place-info">
+
+                            <div class="place-meta">
+                                <span>PLACE</span>
+                                <span>★★★★★</span>
+                            </div>
+
+                            <h3>Bamburgh</h3>
+
+                            <p>
+                                Castle, coastline and one of Northumberland's most recognisable villages.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="place-card">
+
+                        <div class="place-image placeholder-image">
+                            <span>Photo</span>
+
+                            <button
+                                class="save-button"
+                                aria-label="Save Craster"
+                            >
+                                ♡
+                            </button>
+                        </div>
+
+                        <div class="place-info">
+
+                            <div class="place-meta">
+                                <span>COAST</span>
+                                <span>★★★★★</span>
+                            </div>
+
+                            <h3>Craster</h3>
+
+                            <p>
+                                A small fishing village, dramatic coastline and the walk to Dunstanburgh Castle.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="place-card">
+
+                        <div class="place-image placeholder-image">
+                            <span>Photo</span>
+
+                            <button
+                                class="save-button"
+                                aria-label="Save Alnwick"
+                            >
+                                ♡
+                            </button>
+                        </div>
+
+                        <div class="place-info">
+
+                            <div class="place-meta">
+                                <span>TOWN</span>
+                                <span>★★★★★</span>
+                            </div>
+
+                            <h3>Alnwick</h3>
+
+                            <p>
+                                Historic streets, Alnwick Castle and one of Northumberland's best-known towns.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="place-card">
+
+                        <div class="place-image placeholder-image">
+                            <span>Photo</span>
+
+                            <button
+                                class="save-button"
+                                aria-label="Save Warkworth"
+                            >
+                                ♡
+                            </button>
+                        </div>
+
+                        <div class="place-info">
+
+                            <div class="place-meta">
+                                <span>VILLAGE</span>
+                                <span>★★★★★</span>
+                            </div>
+
+                            <h3>Warkworth</h3>
+
+                            <p>
+                                A beautiful riverside village overlooked by its impressive medieval castle.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- MAP INTRO -->
+        <section class="map-section section">
+
+            <div class="container">
+
+                <div class="map-card">
+
+                    <div class="map-content">
+
+                        <p class="eyebrow">EXPLORE THE MAP</p>
+
+                        <h2>
+                            See what's
+                            <span>around you.</span>
+                        </h2>
+
+                        <p>
+                            Explore Northumberland on the map and discover places to eat, stay, walk and visit.
+                        </p>
+
+                        <a href="#" class="primary-button">
+                            Explore the map
+                            <span>→</span>
+                        </a>
+
+                    </div>
+
+
+                    <div class="map-placeholder">
+
+                        <div class="map-grid-lines"></div>
+
+                        <span>Interactive map</span>
+
+                        <div class="map-pin pin-one">●</div>
+                        <div class="map-pin pin-two">●</div>
+                        <div class="map-pin pin-three">●</div>
+                        <div class="map-pin pin-four">●</div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+
+            <div class="container footer-inner">
+
+                <div>
+
+                    <a href="#" class="logo footer-logo">
+
+                        <img
+                            src="assets/logo.png"
+                            alt="Through Northumberland logo"
+                            class="logo-image"
+                        >
+
+                        <span>through</span>
+                        <strong>northumberland</strong>
+
+                    </a>
+
+                    <p>
+                        A modern guide to exploring Northumberland.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <a href="#">Explore</a>
+                    <a href="#">About</a>
+                    <a href="#">Contact</a>
+
+                </div>
+
+            </div>
+
+
+            <div class="container footer-bottom">
+
+                <span>© 2026 Through Northumberland</span>
+                <span>Made in Northumberland</span>
+
+            </div>
+
+        </footer>
+
+    </main>
+
 </body>
 </html>
