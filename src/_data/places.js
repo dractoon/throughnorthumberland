@@ -5,7 +5,7 @@ module.exports = {
         title: "Bamburgh",
         description: "Discover Bamburgh, one of Northumberland's most spectacular coastal villages.",
 
-        category: "COASTAL VILLAGE",
+        category: "Coast",
 
         image: "/assets/images/places/bamburgh.jpg",
 
@@ -44,7 +44,7 @@ module.exports = {
         title: "Craster",
         description: "Discover Craster, a small fishing village on Northumberland's spectacular Heritage Coast.",
 
-        category: "COASTAL VILLAGE",
+        category: "Coast",
 
         image: "/assets/images/places/craster.jpg",
 
@@ -73,6 +73,84 @@ module.exports = {
                 title: "The Coastal Walk",
                 description: "Walk along the cliffs and beaches around Craster for some of the finest scenery on Northumberland's Heritage Coast.",
                 image: "/assets/images/places/craster-coast.jpg"
+            }
+        ]
+    },
+
+    alnwick: {
+    status: "published",
+    featured: "no",
+    title: "Alnwick",
+    description: "Discover Alnwick, one of Northumberland's most historic and characterful towns.",
+
+    category: "Historic",
+
+    image: "/assets/images/places/alnwick.jpg",
+
+    intro: "A historic market town famous for its castle, gardens and charming streets.",
+
+    overview: "Alnwick is one of Northumberland's best-known towns, combining centuries of history with independent shops, cafés and places to explore.",
+
+    getting_there: "Alnwick is just off the A1 and is around 45 minutes from Newcastle by car.",
+
+    best_time: "Spring through early autumn is ideal for exploring the town and gardens.",
+
+    parking: "Several car parks are available within easy walking distance of the town centre.",
+
+    highlights: [
+        {
+            title: "Alnwick Castle",
+            description: "Explore one of England's most impressive medieval castles and discover its fascinating history.",
+            image: "/assets/images/places/alnwick-castle.jpg"
+        },
+        {
+            title: "Alnwick Garden",
+            description: "Explore the spectacular gardens, including the famous Grand Cascade and Poison Garden.",
+            image: "/assets/images/places/alnwick-garden.jpg"
+        },
+        {
+            title: "The Town",
+            description: "Wander through the historic streets and discover independent shops, cafés and pubs.",
+            image: "/assets/images/places/alnwick-town.jpg"
+        }
+    ]
+},
+
+    warkworth: {
+        status: "published",
+        featured: "no",
+        title: "Warkworth",
+        description: "Discover Warkworth, a beautiful historic village on the Northumberland coast.",
+
+        category: "Villages",
+
+        image: "/assets/images/places/warkworth.jpg",
+
+        intro: "A beautiful historic village wrapped around an impressive medieval castle and the River Coquet.",
+
+        overview: "Warkworth is one of Northumberland's most picturesque villages. Its narrow streets, independent shops and riverside setting are dominated by the dramatic ruins of Warkworth Castle.",
+
+        getting_there: "Warkworth is just off the A1068, around 10 minutes from Alnwick by car and close to the Northumberland coast.",
+
+        best_time: "Spring through early autumn is ideal for exploring the village and surrounding countryside.",
+
+        parking: "Several car parks are available around the village centre.",
+
+        highlights: [
+            {
+                title: "Warkworth Castle",
+                description: "Explore the dramatic medieval castle overlooking the village and River Coquet.",
+                image: "/assets/images/places/warkworth-castle.jpg"
+            },
+            {
+                title: "The Village",
+                description: "Wander through the historic streets and discover independent shops, cafés and pubs.",
+                image: "/assets/images/places/warkworth-village.jpg"
+            },
+            {
+                title: "River Coquet",
+                description: "Enjoy a walk beside the river and take in the peaceful countryside surrounding the village.",
+                image: "/assets/images/places/warkworth-river.jpg"
             }
         ]
     }

@@ -43,29 +43,33 @@ permalink: /places/
 
                 <div class="filter-list">
 
-                    <button class="filter-button active">
-                        All places
-                    </button>
+                    <div class="filter-list">
 
-                    <button class="filter-button">
-                        Coast
-                    </button>
+                        <button class="filter-button active" data-filter="all">
+                            All places
+                        </button>
 
-                    <button class="filter-button">
-                        Towns
-                    </button>
+                        <button class="filter-button" data-filter="Coast">
+                            Coast
+                        </button>
 
-                    <button class="filter-button">
-                        Villages
-                    </button>
+                        <button class="filter-button" data-filter="Towns">
+                            Towns
+                        </button>
 
-                    <button class="filter-button">
-                        Historic
-                    </button>
+                        <button class="filter-button" data-filter="Villages">
+                            Villages
+                        </button>
 
-                    <button class="filter-button">
-                        Countryside
-                    </button>
+                        <button class="filter-button" data-filter="Historic">
+                            Historic
+                        </button>
+
+                        <button class="filter-button" data-filter="Countryside">
+                            Countryside
+                        </button>
+
+                    </div>
 
                 </div>
 
@@ -85,7 +89,10 @@ permalink: /places/
 
                     {% for key, place in places %}
                         {% if place.status == "published" %}
-                            <article class="places-card">
+                            <article 
+                                class="places-card"
+                                data-category="{{ place.category }}"
+                         >
 
                                 <a href="/places/{{ key }}/" class="places-card-link">
 
@@ -132,3 +139,4 @@ permalink: /places/
             </div>
 
         </section>
+<script src="/assets/js/places-filters.js"></script>     

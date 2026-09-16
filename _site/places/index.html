@@ -78,29 +78,33 @@
 
                 <div class="filter-list">
 
-                    <button class="filter-button active">
-                        All places
-                    </button>
+                    <div class="filter-list">
 
-                    <button class="filter-button">
-                        Coast
-                    </button>
+                        <button class="filter-button active" data-filter="all">
+                            All places
+                        </button>
 
-                    <button class="filter-button">
-                        Towns
-                    </button>
+                        <button class="filter-button" data-filter="Coast">
+                            Coast
+                        </button>
 
-                    <button class="filter-button">
-                        Villages
-                    </button>
+                        <button class="filter-button" data-filter="Towns">
+                            Towns
+                        </button>
 
-                    <button class="filter-button">
-                        Historic
-                    </button>
+                        <button class="filter-button" data-filter="Villages">
+                            Villages
+                        </button>
 
-                    <button class="filter-button">
-                        Countryside
-                    </button>
+                        <button class="filter-button" data-filter="Historic">
+                            Historic
+                        </button>
+
+                        <button class="filter-button" data-filter="Countryside">
+                            Countryside
+                        </button>
+
+                    </div>
 
                 </div>
 
@@ -120,7 +124,10 @@
 
                     
                         
-                            <article class="places-card">
+                            <article 
+                                class="places-card"
+                                data-category="Coast"
+                         >
 
                                 <a href="/places/bamburgh/" class="places-card-link">
 
@@ -144,7 +151,7 @@
                                     <div class="places-card-content">
 
                                         <div class="places-card-meta">
-                                            <span>COASTAL VILLAGE</span>
+                                            <span>Coast</span>
                                             <span>★★★★★</span>
                                         </div>
 
@@ -163,12 +170,103 @@
                     
                         
                     
+                        
+                            <article 
+                                class="places-card"
+                                data-category="Historic"
+                         >
+
+                                <a href="/places/alnwick/" class="places-card-link">
+
+                                    <div class="places-card-image">
+
+                                        <img
+                                            src="/assets/images/places/alnwick.jpg"
+                                            alt="Alnwick"
+                                        >
+
+                                        <button
+                                            class="save-button"
+                                            type="button"
+                                            aria-label="Save Alnwick"
+                                        >
+                                            ♡
+                                        </button>
+
+                                    </div>
+
+                                    <div class="places-card-content">
+
+                                        <div class="places-card-meta">
+                                            <span>Historic</span>
+                                            <span>★★★★★</span>
+                                        </div>
+
+                                        <h2>Alnwick</h2>
+
+                                        <p>
+                                            A historic market town famous for its castle, gardens and charming streets.
+                                        </p>
+
+                                    </div>
+
+                                </a>
+
+                            </article>
+                        
+                    
+                        
+                            <article 
+                                class="places-card"
+                                data-category="Villages"
+                         >
+
+                                <a href="/places/warkworth/" class="places-card-link">
+
+                                    <div class="places-card-image">
+
+                                        <img
+                                            src="/assets/images/places/warkworth.jpg"
+                                            alt="Warkworth"
+                                        >
+
+                                        <button
+                                            class="save-button"
+                                            type="button"
+                                            aria-label="Save Warkworth"
+                                        >
+                                            ♡
+                                        </button>
+
+                                    </div>
+
+                                    <div class="places-card-content">
+
+                                        <div class="places-card-meta">
+                                            <span>Villages</span>
+                                            <span>★★★★★</span>
+                                        </div>
+
+                                        <h2>Warkworth</h2>
+
+                                        <p>
+                                            A beautiful historic village wrapped around an impressive medieval castle and the River Coquet.
+                                        </p>
+
+                                    </div>
+
+                                </a>
+
+                            </article>
+                        
+                    
 
                 </div>
 
             </div>
 
         </section>
+<script src="/assets/js/places-filters.js"></script>     
 
     </main>
 
