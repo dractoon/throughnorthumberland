@@ -39,7 +39,7 @@ module.exports = {
     },
 
     craster: {
-        status: "published",
+        status: "hidden",
         featured: "no",
         title: "Craster",
         description: "Discover Craster, a small fishing village on Northumberland's spectacular Heritage Coast.",
