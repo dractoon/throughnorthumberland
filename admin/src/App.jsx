@@ -5,6 +5,7 @@ import AddPlace from "./AddPlace";
 import Categories from "./Categories";
 import Suggestions from "./Suggestions";
 import EditPlace from "./EditPlace";
+import Users from "./Users";
 function App() {
     const [session, setSession] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -263,6 +264,19 @@ function App() {
         Categories
     </button>
 
+        <button
+        type="button"
+        onClick={() => setActiveSection("users")}
+        style={{
+            ...styles.navButton,
+            ...(activeSection === "users"
+                ? styles.navButtonActive
+                : {})
+        }}
+    >
+        Users
+    </button>
+
 </div>
                 <div style={styles.header}>
                     <div>
@@ -387,6 +401,11 @@ function App() {
 {activeSection === "categories" && (
     <div id="categories">
         <Categories />
+    </div>
+)}
+{activeSection === "users" && (
+    <div id="users">
+        <Users />
     </div>
 )}
                 {showAddPlace && (
