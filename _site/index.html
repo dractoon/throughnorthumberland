@@ -17,7 +17,8 @@
 </head>
 
 <body>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/assets/js/supabase-client.js"></script>
     <header class="site-header">
     <div class="container header-inner">
 
@@ -28,330 +29,708 @@
             <strong>northumberland</strong>
         </a>
 
-        <nav class="main-nav">
-            <a href="/">Explore</a>
-            <a href="/places/">Places</a>
-            <a href="#">Food &amp; Drink</a>
-            <a href="#">Stay</a>
+        <nav class="desktop-nav">
+            <a href="/explore/">Explore</a>
+            <a href="/explore/?category=harbours-coast,villages-towns,castles-history,nature-wildlife">Places</a>
+            <a href="/explore/?category=food-drink">Food &amp; Drink</a>
+            <a href="/explore/?category=places-to-stay">Stay</a>
         </nav>
+
+        <div class="header-account-wrap">
+
+            <a
+                href="/login/"
+                class="header-account"
+                id="header-account-button"
+                aria-label="Account"
+            >
+                <span class="header-account-icon" aria-hidden="true">
+                    <span class="user-icon-head"></span>
+                    <span class="user-icon-body"></span>
+                </span>
+
+                <span
+                    class="header-account-text"
+                    id="header-account-text"
+                >
+                    Account
+                </span>
+            </a>
+
+            <div
+                class="header-account-menu"
+                id="header-account-menu"
+                hidden
+            >
+                <a href="/account/">My Account</a>
+
+                <button
+                    type="button"
+                    id="header-logout"
+                >
+                    Log out
+                </button>
+            </div>
+
+        </div>
 
     </div>
 </header>
 
+
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+
+    const accountButton =
+        document.getElementById("header-account-button");
+
+    const accountText =
+        document.getElementById("header-account-text");
+
+    const accountMenu =
+        document.getElementById("header-account-menu");
+
+    const logoutButton =
+        document.getElementById("header-logout");
+
+
+    if (
+        !accountButton ||
+        !accountText ||
+        !accountMenu ||
+        !logoutButton
+    ) {
+        return;
+    }
+
+
+    /* -----------------------------------------
+       CHECK LOGIN STATUS
+       ----------------------------------------- */
+
+    if (window.tnSupabase) {
+
+        const {
+            data: {
+                user
+            }
+        } = await window.tnSupabase.auth.getUser();
+
+
+        if (user) {
+
+            accountButton.href = "/account/";
+            accountText.textContent = "My Account";
+
+            accountButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+
+            accountButton.addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+
+                    const isOpen =
+                        !accountMenu.hidden;
+
+                    accountMenu.hidden = isOpen;
+
+                    accountButton.setAttribute(
+                        "aria-expanded",
+                        String(!isOpen)
+                    );
+
+                }
+            );
+
+        }
+
+    }
+
+
+    /* -----------------------------------------
+       LOG OUT
+       ----------------------------------------- */
+
+    logoutButton.addEventListener(
+        "click",
+        async function () {
+
+            if (!window.tnSupabase) {
+                return;
+            }
+
+            const {
+                error
+            } = await window.tnSupabase.auth.signOut();
+
+            if (!error) {
+
+                window.location.href = "/";
+
+            }
+
+        }
+    );
+
+
+    /* -----------------------------------------
+       CLOSE MENU WHEN CLICKING ELSEWHERE
+       ----------------------------------------- */
+
+    document.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                !accountMenu.hidden &&
+                !event.target.closest(
+                    ".header-account-wrap"
+                )
+            ) {
+
+                accountMenu.hidden = true;
+
+                accountButton.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+        }
+    );
+
+});
+</script>
+
     <main>
-                  <!-- HERO -->
-        <section class="hero">
-            <div class="container">
+        <!-- HERO -->
 
-                <div class="hero-content">
-                    <p class="eyebrow">NORTHUMBERLAND, ENGLAND</p>
+<section class="hero">
+    <div class="container">
 
-                    <h1>
-                        Discover Northumberland
-                        <span>one place at a time.</span>
-                    </h1>
+    <div class="hero-content">
+        <p class="eyebrow">NORTHUMBERLAND, ENGLAND</p>
 
-                    <p class="hero-intro">
-                        Find places to explore, eat, stay and experience across England's most northerly county.
-                    </p>
+        <h1>
+            Your guide to
+            <span>Northumberland.</span>
+        </h1>
 
-                    <div class="search-box">
-                        <span class="search-icon">⌕</span>
+        <p class="hero-intro">
+            Discover places to explore, eat, stay and experience across England's most northerly county.
+        </p>
 
-                        <input
-                            type="text"
-                            placeholder="Search places, food, walks..."
-                            aria-label="Search Northumberland"
-                        >
 
-                        <button>Search</button>
-                    </div>
+        <a href="/explore/" class="hero-button">
+            Start Exploring <span>→</span>
+        </a>
+
+        <a href="/suggest-place/" class="hero-button hero-button-secondary">
+            Suggest a place <span>＋</span>
+        </a>
+    </div>
+
+    <div class="hero-image">
+        <img
+            src="/assets/hero-northumberland.jpg"
+            alt="Northumberland landscape"
+        >
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- CATEGORIES -->
+
+<section class="categories section">
+    <div class="container">
+
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">EXPLORE</p>
+            <h2>What are you looking for?</h2>
+        </div>
+    </div>
+
+       <div class="category-grid">
+
+            <a href="/explore/?category=harbours-coast,villages-towns,castles-history,nature-wildlife" class="category-card category-places">
+                <div class="category-icon">
+                    <img src="/assets/icons/places.png" alt="">
+                </div>
+                <div>
+                    <h3>Places</h3>
+                    <p>Towns, villages &amp; landmarks</p>
+                </div>
+            </a>
+
+            <a href="/explore/?category=food-drink" class="category-card category-food">
+                <div class="category-icon">
+                    <img src="/assets/icons/food-drink.png" alt="">
+                </div>
+                <div>
+                    <h3>Food &amp; Drink</h3>
+                    <p>Cafés, restaurants &amp; pubs</p>
+                </div>
+            </a>
+
+            <a href="/explore/?category=beaches" class="category-card category-beaches">
+                <div class="category-icon">
+                    <img src="/assets/icons/beaches.png" alt="">
+                </div>
+                <div>
+                    <h3>Beaches</h3>
+                    <p>Coastline, sea &amp; sand</p>
+                </div>
+            </a>
+
+            <a href="/explore/?category=walks-trails" class="category-card category-walks">
+                <div class="category-icon">
+                    <img src="/assets/icons/walks.png" alt="">
+                </div>
+                <div>
+                    <h3>Walks</h3>
+                    <p>Trails, hills &amp; countryside</p>
+                </div>
+            </a>
+
+            <a href="/explore/?category=places-to-stay" class="category-card category-stay">
+                <div class="category-icon">
+                    <img src="/assets/icons/stay.png" alt="">
+                </div>
+                <div>
+                    <h3>Stay</h3>
+                    <p>Hotels, cottages &amp; campsites</p>
+                </div>
+            </a>
+
+            <a href="/explore/?category=Things-to-do" class="category-card category-things">
+                <div class="category-icon">
+                    <img src="/assets/icons/things-to-do.png" alt="">
+                </div>
+                <div>
+                    <h3>Things to do</h3>
+                    <p>Activities &amp; experiences</p>
+                </div>
+            </a>
+
+        </div> 
+</div>
+
+</section>
+
+<!-- FEATURED PLACES -->
+
+<section class="featured section">
+    <div class="container">
+
+    <div class="section-heading section-heading-row">
+        <div>
+            <p class="eyebrow">CURATED FOR YOU</p>
+            <h2>Places worth knowing</h2>
+        </div>
+
+        <a href="/explore/" class="view-all">
+            View all <span>→</span>
+        </a>
+    </div>
+
+
+    <div class="place-grid">
+        
+
+
+    
+
+        <article class="place-card">
+            <a href="/places/rothbury/" class="place-card-link">
+
+                <div class="place-image">
+                    
+                        <img src="https://tcaepknuazhjueynkwye.supabase.co/storage/v1/object/public/place-images/places/rothbury-d2a558af-56f6-41c7-9bf2-0570fd3d0423.jpeg" alt="Rothbury">
+                    
                 </div>
 
-                <div class="hero-image placeholder-image">
-                    <span>Northumberland photograph</span>
-                </div>
+                <div class="place-info">
 
-            </div>
-        </section>
-
-
-        <!-- CATEGORIES -->
-        <section class="categories section">
-            <div class="container">
-
-                <div class="section-heading">
-                    <div>
-                        <p class="eyebrow">EXPLORE</p>
-                        <h2>What are you looking for?</h2>
-                    </div>
-                </div>
-
-                <div class="category-grid">
-
-                    <a href="#" class="category-card category-places">
-                        <div class="category-icon">⌂</div>
-
-                        <div>
-                            <h3>Places</h3>
-                            <p>Towns, villages & landmarks</p>
-                        </div>
-                    </a>
-
-
-                    <a href="#" class="category-card category-food">
-                        <div class="category-icon">+</div>
-
-                        <div>
-                            <h3>Food & Drink</h3>
-                            <p>Cafés, restaurants & pubs</p>
-                        </div>
-                    </a>
-
-
-                    <a href="#" class="category-card category-beaches">
-                        <div class="category-icon">≈</div>
-
-                        <div>
-                            <h3>Beaches</h3>
-                            <p>Coastline, sea & sand</p>
-                        </div>
-                    </a>
-
-
-                    <a href="#" class="category-card category-walks">
-                        <div class="category-icon">↗</div>
-
-                        <div>
-                            <h3>Walks</h3>
-                            <p>Trails, hills & countryside</p>
-                        </div>
-                    </a>
-
-
-                    <a href="#" class="category-card category-stay">
-                        <div class="category-icon">□</div>
-
-                        <div>
-                            <h3>Stay</h3>
-                            <p>Hotels, cottages & campsites</p>
-                        </div>
-                    </a>
-
-
-                    <a href="#" class="category-card category-things">
-                        <div class="category-icon">★</div>
-
-                        <div>
-                            <h3>Things to do</h3>
-                            <p>Activities & experiences</p>
-                        </div>
-                    </a>
-
-                </div>
-
-            </div>
-        </section>
-
-
-        <!-- FEATURED PLACES -->
-        <section class="featured section">
-            <div class="container">
-
-                <div class="section-heading section-heading-row">
-
-                    <div>
-                        <p class="eyebrow">CURATED FOR YOU</p>
-                        <h2>Places worth knowing</h2>
-                    </div>
-
-                    <a href="#" class="view-all">
-                        View all <span>→</span>
-                    </a>
-
-                </div>
-
-
-                <div class="place-grid">
-
-                    <article class="place-card">
-
-                        <div class="place-image placeholder-image">
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Bamburgh"
-                            >
-                                ♡
-                            </button>
-                        </div>
-
-                        <div class="place-info">
-
-                            <div class="place-meta">
-                                <span>PLACE</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h3>Bamburgh</h3>
-
-                            <p>
-                                Castle, coastline and one of Northumberland's most recognisable villages.
-                            </p>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="place-card">
-
-                        <div class="place-image placeholder-image">
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Craster"
-                            >
-                                ♡
-                            </button>
-                        </div>
-
-                        <div class="place-info">
-
-                            <div class="place-meta">
-                                <span>COAST</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h3>Craster</h3>
-
-                            <p>
-                                A small fishing village, dramatic coastline and the walk to Dunstanburgh Castle.
-                            </p>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="place-card">
-
-                        <div class="place-image placeholder-image">
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Alnwick"
-                            >
-                                ♡
-                            </button>
-                        </div>
-
-                        <div class="place-info">
-
-                            <div class="place-meta">
-                                <span>TOWN</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h3>Alnwick</h3>
-
-                            <p>
-                                Historic streets, Alnwick Castle and one of Northumberland's best-known towns.
-                            </p>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="place-card">
-
-                        <div class="place-image placeholder-image">
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Warkworth"
-                            >
-                                ♡
-                            </button>
-                        </div>
-
-                        <div class="place-info">
-
-                            <div class="place-meta">
-                                <span>VILLAGE</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h3>Warkworth</h3>
-
-                            <p>
-                                A beautiful riverside village overlooked by its impressive medieval castle.
-                            </p>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </div>
-        </section>
-
-
-        <!-- MAP INTRO -->
-        <section class="map-section section">
-
-            <div class="container">
-
-                <div class="map-card">
-
-                    <div class="map-content">
-
-                        <p class="eyebrow">EXPLORE THE MAP</p>
-
-                        <h2>
-                            See what's
-                            <span>around you.</span>
-                        </h2>
-
-                        <p>
-                            Explore Northumberland on the map and discover places to eat, stay, walk and visit.
-                        </p>
-
-                        <a href="#" class="primary-button">
-                            Explore the map
-                            <span>→</span>
-                        </a>
-
+                    <div class="place-meta">
+                        <span>Countryside</span>
                     </div>
 
+                    <h3>Rothbury</h3>
 
-                    <div class="map-placeholder">
-
-                        <div class="map-grid-lines"></div>
-
-                        <span>Interactive map</span>
-
-                        <div class="map-pin pin-one">●</div>
-                        <div class="map-pin pin-two">●</div>
-                        <div class="map-pin pin-three">●</div>
-                        <div class="map-pin pin-four">●</div>
-
-                    </div>
+                    <p>Rothbury is a charming market town in the heart of Coquetdale, surrounded by dramatic hills, wooded valleys and some of Northumberland&#39;s finest countryside.</p>
 
                 </div>
 
-            </div>
+            </a>
+        </article>
 
-        </section>
+        
 
+    
 
-        <!-- FOOTER -->
+    
+
+        <article class="place-card">
+            <a href="/places/alnwick/" class="place-card-link">
+
+                <div class="place-image">
+                    
+                        <img src="https://tcaepknuazhjueynkwye.supabase.co/storage/v1/object/public/place-images/places/alnwick-fe7fab26-71b3-4a27-995b-f61798bbf6d5.jpg" alt="Alnwick">
+                    
+                </div>
+
+                <div class="place-info">
+
+                    <div class="place-meta">
+                        <span>Towns</span>
+                    </div>
+
+                    <h3>Alnwick</h3>
+
+                    <p>Alnwick is one of Northumberland&#39;s best-known towns, combining a historic market centre with one of England&#39;s most spectacular castles and gardens.</p>
+
+                </div>
+
+            </a>
+        </article>
+
+        
+
+    
+
+    
+
+    
+
+        <article class="place-card">
+            <a href="/places/warkworth/" class="place-card-link">
+
+                <div class="place-image">
+                    
+                        <img src="https://tcaepknuazhjueynkwye.supabase.co/storage/v1/object/public/place-images/places/warkworth-bc0a0172-dbb8-4401-821f-26f8ce156d89.jpg" alt="Warkworth">
+                    
+                </div>
+
+                <div class="place-info">
+
+                    <div class="place-meta">
+                        <span>Villages</span>
+                    </div>
+
+                    <h3>Warkworth</h3>
+
+                    <p>Warkworth is one of Northumberland&#39;s most picturesque villages. Set around a bend in the River Coquet and overlooked by Warkworth Castle, it combines medieval history, independent shops and cafés with easy access to the nearby coast.</p>
+
+                </div>
+
+            </a>
+        </article>
+
+        
+
+    
+
+    
+
+        <article class="place-card">
+            <a href="/places/seahouses/" class="place-card-link">
+
+                <div class="place-image">
+                    
+                        <img src="https://tcaepknuazhjueynkwye.supabase.co/storage/v1/object/public/place-images/places/seahouses-cb5e086d-35a4-4244-8a96-1e3d75fe3472.jpg" alt="Seahouses">
+                    
+                </div>
+
+                <div class="place-info">
+
+                    <div class="place-meta">
+                        <span>Coast</span>
+                    </div>
+
+                    <h3>Seahouses</h3>
+
+                    <p>Seahouses is one of the best-known destinations on the Northumberland coast. Its harbour, beaches and boat trips make it a popular place to visit, while its location provides easy access to Bamburgh, the Farne Islands and the surrounding coastline.</p>
+
+                </div>
+
+            </a>
+        </article>
+
+        
+
+    
+
+    
+
+    
+
+    </div>
+
+</div>
+
+</section>
+
+<!-- MAP INTRO -->
+
+<section class="map-section section">
+    <div class="container">
+
+    <div class="map-card">
+
+        <div class="map-content">
+            <p class="eyebrow">EXPLORE THE MAP</p>
+
+            <h2>
+                See what's
+                <span>around you.</span>
+            </h2>
+
+            <p>
+                Explore Northumberland on the map and discover places to eat, stay, walk and visit.
+            </p>
+
+            <a href="#" class="primary-button">
+                Explore the map
+                <span>→</span>
+            </a>
+        </div>
+        <div id="northumberland-map" class="interactive-map"></div>
+    </div>
+
+</div>
+</section>
+<link rel="stylesheet" href="/assets/leaflet.css">
+
+<script src="/assets/leaflet.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const mapElement = document.getElementById("northumberland-map");
+
+    if (!mapElement) return;
+
+    const customIcon = L.icon({
+        iconUrl: "/assets/marker-icon.png",
+        iconRetinaUrl: "/assets/marker-icon-2x.png",
+        shadowUrl: "/assets/marker-shadow.png",
+
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+
+    const map = L.map("northumberland-map");
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const places = [
+        
+            
+            {
+                title: "Rothbury",
+                slug: "rothbury",
+                latitude: 55.3104,
+                longitude: -1.908
+            },
+            
+        
+            
+            {
+                title: "Alnwick",
+                slug: "alnwick",
+                latitude: 55.4137,
+                longitude: -1.7056
+            },
+            
+        
+            
+            {
+                title: "Alnmouth",
+                slug: "alnmouth",
+                latitude: 55.3897,
+                longitude: -1.6112
+            },
+            
+        
+            
+            {
+                title: "Warkworth",
+                slug: "warkworth",
+                latitude: 55.3458,
+                longitude: -1.6138
+            },
+            
+        
+            
+        
+            
+            {
+                title: "Craster",
+                slug: "craster",
+                latitude: 55.4796,
+                longitude: -1.5934
+            },
+            
+        
+            
+            {
+                title: "Bamburgh",
+                slug: "bamburgh",
+                latitude: 55.606,
+                longitude: -1.709
+            },
+            
+        
+    ];
+
+    const bounds = [];
+
+    places.forEach(function (place) {
+
+        const marker = L.marker(
+            [place.latitude, place.longitude],
+            { icon: customIcon }
+        ).addTo(map);
+
+        marker.bindPopup(`
+            <strong>${place.title}</strong><br>
+            <a href="/places/${place.slug}/">View place →</a>
+        `);
+
+        bounds.push([
+            place.latitude,
+            place.longitude
+        ]);
+    });
+
+    if (bounds.length > 0) {
+        map.fitBounds(bounds, {
+            padding: [40, 40]
+        });
+    } else {
+        map.setView([55.2, -1.7], 9);
+    }
+
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const mapElement = document.getElementById("northumberland-map");
+
+    if (!mapElement) return;
+
+    const map = L.map("northumberland-map");
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const places = [
+        
+            
+            {
+                title: "Rothbury",
+                slug: "rothbury",
+                latitude: 55.3104,
+                longitude: -1.908
+            },
+            
+        
+            
+            {
+                title: "Alnwick",
+                slug: "alnwick",
+                latitude: 55.4137,
+                longitude: -1.7056
+            },
+            
+        
+            
+            {
+                title: "Alnmouth",
+                slug: "alnmouth",
+                latitude: 55.3897,
+                longitude: -1.6112
+            },
+            
+        
+            
+            {
+                title: "Warkworth",
+                slug: "warkworth",
+                latitude: 55.3458,
+                longitude: -1.6138
+            },
+            
+        
+            
+        
+            
+            {
+                title: "Craster",
+                slug: "craster",
+                latitude: 55.4796,
+                longitude: -1.5934
+            },
+            
+        
+            
+            {
+                title: "Bamburgh",
+                slug: "bamburgh",
+                latitude: 55.606,
+                longitude: -1.709
+            },
+            
+        
+    ];
+
+    const bounds = [];
+
+    places.forEach(function (place) {
+
+        const marker = L.marker([
+            place.latitude,
+            place.longitude
+        ]).addTo(map);
+
+        marker.bindPopup(`
+            <strong>${place.title}</strong><br>
+            <a href="/places/${place.slug}/">View place →</a>
+        `);
+
+        bounds.push([
+            place.latitude,
+            place.longitude
+        ]);
+    });
+
+    if (bounds.length > 0) {
+        map.fitBounds(bounds, {
+            padding: [40, 40]
+        });
+    } else {
+        map.setView([55.2, -1.7], 9);
+    }
+
+});
+</script>
 
 
     </main>
@@ -372,12 +751,12 @@
             </p>
         </div>
 
-        <div class="footer-links">
-            <a href="/">Explore</a>
-            <a href="/places/">Places</a>
-            <a href="#">Food &amp; Drink</a>
-            <a href="#">Stay</a>
-        </div>
+<div class="footer-links">
+    <a href="/explore/">Explore</a>
+    <a href="/explore/?category=harbours-coast,villages-towns,castles-history,nature-wildlife">Places</a>
+    <a href="/explore/?category=food-drink">Food &amp; Drink</a>
+    <a href="/explore/?category=places-to-stay">Stay</a>
+</div>
 
     </div>
 

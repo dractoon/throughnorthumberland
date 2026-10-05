@@ -3,317 +3,340 @@ layout: base.njk
 title: Explore Northumberland
 description: Discover the best places, beaches, walks, food and things to do across Northumberland.
 ---
-          <!-- HERO -->
-        <section class="hero">
-            <div class="container">
+<!-- HERO -->
 
-                <div class="hero-content">
-                    <p class="eyebrow">NORTHUMBERLAND, ENGLAND</p>
+<section class="hero">
+    <div class="container">
 
-                    <h1>
-                        Discover Northumberland
-                        <span>one place at a time.</span>
-                    </h1>
+    <div class="hero-content">
+        <p class="eyebrow">NORTHUMBERLAND, ENGLAND</p>
 
-                    <p class="hero-intro">
-                        Find places to explore, eat, stay and experience across England's most northerly county.
-                    </p>
+        <h1>
+            Your guide to
+            <span>Northumberland.</span>
+        </h1>
 
-                    <div class="search-box">
-                        <span class="search-icon">⌕</span>
+        <p class="hero-intro">
+            Discover places to explore, eat, stay and experience across England's most northerly county.
+        </p>
 
-                        <input
-                            type="text"
-                            placeholder="Search places, food, walks..."
-                            aria-label="Search Northumberland"
-                        >
 
-                        <button>Search</button>
-                    </div>
+        <a href="/explore/" class="hero-button">
+            Start Exploring <span>→</span>
+        </a>
+
+        <a href="/suggest-place/" class="hero-button hero-button-secondary">
+            Suggest a place <span>＋</span>
+        </a>
+    </div>
+
+    <div class="hero-image">
+        <img
+            src="/assets/hero-northumberland.jpg"
+            alt="Northumberland landscape"
+        >
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- CATEGORIES -->
+
+<section class="categories section">
+    <div class="container">
+
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">EXPLORE</p>
+            <h2>What are you looking for?</h2>
+        </div>
+    </div>
+
+       <div class="category-grid">
+
+            <a href="/explore/?category=harbours-coast,villages-towns,castles-history,nature-wildlife" class="category-card category-places">
+                <div class="category-icon">
+                    <img src="/assets/icons/places.png" alt="">
+                </div>
+                <div>
+                    <h3>Places</h3>
+                    <p>Towns, villages &amp; landmarks</p>
+                </div>
+            </a>
+
+            <a href="/explore/?category=food-drink" class="category-card category-food">
+                <div class="category-icon">
+                    <img src="/assets/icons/food-drink.png" alt="">
+                </div>
+                <div>
+                    <h3>Food &amp; Drink</h3>
+                    <p>Cafés, restaurants &amp; pubs</p>
+                </div>
+            </a>
+
+            <a href="/explore/?category=beaches" class="category-card category-beaches">
+                <div class="category-icon">
+                    <img src="/assets/icons/beaches.png" alt="">
+                </div>
+                <div>
+                    <h3>Beaches</h3>
+                    <p>Coastline, sea &amp; sand</p>
+                </div>
+            </a>
+
+            <a href="/explore/?category=walks-trails" class="category-card category-walks">
+                <div class="category-icon">
+                    <img src="/assets/icons/walks.png" alt="">
+                </div>
+                <div>
+                    <h3>Walks</h3>
+                    <p>Trails, hills &amp; countryside</p>
+                </div>
+            </a>
+
+            <a href="/explore/?category=places-to-stay" class="category-card category-stay">
+                <div class="category-icon">
+                    <img src="/assets/icons/stay.png" alt="">
+                </div>
+                <div>
+                    <h3>Stay</h3>
+                    <p>Hotels, cottages &amp; campsites</p>
+                </div>
+            </a>
+
+            <a href="/explore/?category=Things-to-do" class="category-card category-things">
+                <div class="category-icon">
+                    <img src="/assets/icons/things-to-do.png" alt="">
+                </div>
+                <div>
+                    <h3>Things to do</h3>
+                    <p>Activities &amp; experiences</p>
+                </div>
+            </a>
+
+        </div> 
+</div>
+
+</section>
+
+<!-- FEATURED PLACES -->
+
+<section class="featured section">
+    <div class="container">
+
+    <div class="section-heading section-heading-row">
+        <div>
+            <p class="eyebrow">CURATED FOR YOU</p>
+            <h2>Places worth knowing</h2>
+        </div>
+
+        <a href="/explore/" class="view-all">
+            View all <span>→</span>
+        </a>
+    </div>
+
+
+    <div class="place-grid">
+        {% set featured_count = 0 %}
+
+{% for key, place in places %}
+    {% if place.featured == true and place.status == "published" and featured_count < 4 %}
+
+        <article class="place-card">
+            <a href="/places/{{ key }}/" class="place-card-link">
+
+                <div class="place-image">
+                    {% if place.image %}
+                        <img src="{{ place.image }}" alt="{{ place.title }}">
+                    {% else %}
+                        <div class="placeholder-image">
+                            <span>Photo coming soon</span>
+                        </div>
+                    {% endif %}
                 </div>
 
-                <div class="hero-image placeholder-image">
-                    <span>Northumberland photograph</span>
-                </div>
+                <div class="place-info">
 
-            </div>
-        </section>
-
-
-        <!-- CATEGORIES -->
-        <section class="categories section">
-            <div class="container">
-
-                <div class="section-heading">
-                    <div>
-                        <p class="eyebrow">EXPLORE</p>
-                        <h2>What are you looking for?</h2>
-                    </div>
-                </div>
-
-                <div class="category-grid">
-
-                    <a href="#" class="category-card category-places">
-                        <div class="category-icon">⌂</div>
-
-                        <div>
-                            <h3>Places</h3>
-                            <p>Towns, villages & landmarks</p>
-                        </div>
-                    </a>
-
-
-                    <a href="#" class="category-card category-food">
-                        <div class="category-icon">+</div>
-
-                        <div>
-                            <h3>Food & Drink</h3>
-                            <p>Cafés, restaurants & pubs</p>
-                        </div>
-                    </a>
-
-
-                    <a href="#" class="category-card category-beaches">
-                        <div class="category-icon">≈</div>
-
-                        <div>
-                            <h3>Beaches</h3>
-                            <p>Coastline, sea & sand</p>
-                        </div>
-                    </a>
-
-
-                    <a href="#" class="category-card category-walks">
-                        <div class="category-icon">↗</div>
-
-                        <div>
-                            <h3>Walks</h3>
-                            <p>Trails, hills & countryside</p>
-                        </div>
-                    </a>
-
-
-                    <a href="#" class="category-card category-stay">
-                        <div class="category-icon">□</div>
-
-                        <div>
-                            <h3>Stay</h3>
-                            <p>Hotels, cottages & campsites</p>
-                        </div>
-                    </a>
-
-
-                    <a href="#" class="category-card category-things">
-                        <div class="category-icon">★</div>
-
-                        <div>
-                            <h3>Things to do</h3>
-                            <p>Activities & experiences</p>
-                        </div>
-                    </a>
-
-                </div>
-
-            </div>
-        </section>
-
-
-        <!-- FEATURED PLACES -->
-        <section class="featured section">
-            <div class="container">
-
-                <div class="section-heading section-heading-row">
-
-                    <div>
-                        <p class="eyebrow">CURATED FOR YOU</p>
-                        <h2>Places worth knowing</h2>
-                    </div>
-
-                    <a href="#" class="view-all">
-                        View all <span>→</span>
-                    </a>
-
-                </div>
-
-
-                <div class="place-grid">
-
-                    <article class="place-card">
-
-                        <div class="place-image placeholder-image">
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Bamburgh"
-                            >
-                                ♡
-                            </button>
-                        </div>
-
-                        <div class="place-info">
-
-                            <div class="place-meta">
-                                <span>PLACE</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h3>Bamburgh</h3>
-
-                            <p>
-                                Castle, coastline and one of Northumberland's most recognisable villages.
-                            </p>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="place-card">
-
-                        <div class="place-image placeholder-image">
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Craster"
-                            >
-                                ♡
-                            </button>
-                        </div>
-
-                        <div class="place-info">
-
-                            <div class="place-meta">
-                                <span>COAST</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h3>Craster</h3>
-
-                            <p>
-                                A small fishing village, dramatic coastline and the walk to Dunstanburgh Castle.
-                            </p>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="place-card">
-
-                        <div class="place-image placeholder-image">
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Alnwick"
-                            >
-                                ♡
-                            </button>
-                        </div>
-
-                        <div class="place-info">
-
-                            <div class="place-meta">
-                                <span>TOWN</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h3>Alnwick</h3>
-
-                            <p>
-                                Historic streets, Alnwick Castle and one of Northumberland's best-known towns.
-                            </p>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="place-card">
-
-                        <div class="place-image placeholder-image">
-                            <span>Photo</span>
-
-                            <button
-                                class="save-button"
-                                aria-label="Save Warkworth"
-                            >
-                                ♡
-                            </button>
-                        </div>
-
-                        <div class="place-info">
-
-                            <div class="place-meta">
-                                <span>VILLAGE</span>
-                                <span>★★★★★</span>
-                            </div>
-
-                            <h3>Warkworth</h3>
-
-                            <p>
-                                A beautiful riverside village overlooked by its impressive medieval castle.
-                            </p>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </div>
-        </section>
-
-
-        <!-- MAP INTRO -->
-        <section class="map-section section">
-
-            <div class="container">
-
-                <div class="map-card">
-
-                    <div class="map-content">
-
-                        <p class="eyebrow">EXPLORE THE MAP</p>
-
-                        <h2>
-                            See what's
-                            <span>around you.</span>
-                        </h2>
-
-                        <p>
-                            Explore Northumberland on the map and discover places to eat, stay, walk and visit.
-                        </p>
-
-                        <a href="#" class="primary-button">
-                            Explore the map
-                            <span>→</span>
-                        </a>
-
+                    <div class="place-meta">
+                        <span>{{ place.category }}</span>
                     </div>
 
+                    <h3>{{ place.title }}</h3>
 
-                    <div class="map-placeholder">
-
-                        <div class="map-grid-lines"></div>
-
-                        <span>Interactive map</span>
-
-                        <div class="map-pin pin-one">●</div>
-                        <div class="map-pin pin-two">●</div>
-                        <div class="map-pin pin-three">●</div>
-                        <div class="map-pin pin-four">●</div>
-
-                    </div>
+                    <p>{{ place.intro }}</p>
 
                 </div>
 
-            </div>
+            </a>
+        </article>
 
-        </section>
+        {% set featured_count = featured_count + 1 %}
 
+    {% endif %}
+{% endfor %}
+    </div>
 
-        <!-- FOOTER -->
+</div>
+
+</section>
+
+<!-- MAP INTRO -->
+
+<section class="map-section section">
+    <div class="container">
+
+    <div class="map-card">
+
+        <div class="map-content">
+            <p class="eyebrow">EXPLORE THE MAP</p>
+
+            <h2>
+                See what's
+                <span>around you.</span>
+            </h2>
+
+            <p>
+                Explore Northumberland on the map and discover places to eat, stay, walk and visit.
+            </p>
+
+            <a href="#" class="primary-button">
+                Explore the map
+                <span>→</span>
+            </a>
+        </div>
+        <div id="northumberland-map" class="interactive-map"></div>
+    </div>
+
+</div>
+</section>
+<link rel="stylesheet" href="/assets/leaflet.css">
+
+<script src="/assets/leaflet.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const mapElement = document.getElementById("northumberland-map");
+
+    if (!mapElement) return;
+
+    const customIcon = L.icon({
+        iconUrl: "/assets/marker-icon.png",
+        iconRetinaUrl: "/assets/marker-icon-2x.png",
+        shadowUrl: "/assets/marker-shadow.png",
+
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+
+    const map = L.map("northumberland-map");
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const places = [
+        {% for key, place in places %}
+            {% if place.status == "published" and place.latitude and place.longitude %}
+            {
+                title: {{ place.title | dump | safe }},
+                slug: {{ key | dump | safe }},
+                latitude: {{ place.latitude }},
+                longitude: {{ place.longitude }}
+            },
+            {% endif %}
+        {% endfor %}
+    ];
+
+    const bounds = [];
+
+    places.forEach(function (place) {
+
+        const marker = L.marker(
+            [place.latitude, place.longitude],
+            { icon: customIcon }
+        ).addTo(map);
+
+        marker.bindPopup(`
+            <strong>${place.title}</strong><br>
+            <a href="/places/${place.slug}/">View place →</a>
+        `);
+
+        bounds.push([
+            place.latitude,
+            place.longitude
+        ]);
+    });
+
+    if (bounds.length > 0) {
+        map.fitBounds(bounds, {
+            padding: [40, 40]
+        });
+    } else {
+        map.setView([55.2, -1.7], 9);
+    }
+
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const mapElement = document.getElementById("northumberland-map");
+
+    if (!mapElement) return;
+
+    const map = L.map("northumberland-map");
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const places = [
+        {% for key, place in places %}
+            {% if place.status == "published" and place.latitude and place.longitude %}
+            {
+                title: {{ place.title | dump | safe }},
+                slug: {{ key | dump | safe }},
+                latitude: {{ place.latitude }},
+                longitude: {{ place.longitude }}
+            },
+            {% endif %}
+        {% endfor %}
+    ];
+
+    const bounds = [];
+
+    places.forEach(function (place) {
+
+        const marker = L.marker([
+            place.latitude,
+            place.longitude
+        ]).addTo(map);
+
+        marker.bindPopup(`
+            <strong>${place.title}</strong><br>
+            <a href="/places/${place.slug}/">View place →</a>
+        `);
+
+        bounds.push([
+            place.latitude,
+            place.longitude
+        ]);
+    });
+
+    if (bounds.length > 0) {
+        map.fitBounds(bounds, {
+            padding: [40, 40]
+        });
+    } else {
+        map.setView([55.2, -1.7], 9);
+    }
+
+});
+</script>
 

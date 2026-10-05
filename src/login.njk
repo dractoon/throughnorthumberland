@@ -1,0 +1,122 @@
+---
+layout: base.njk
+title: Sign in | Through Northumberland
+description: Sign in to your Through Northumberland account.
+permalink: /login/
+---
+
+<section class="account-page">
+
+    <div class="account-container">
+
+        <div class="account-card">
+
+            <div class="account-brand">
+                <span class="eyebrow">THROUGH NORTHUMBERLAND</span>
+
+                <h1>Welcome back.</h1>
+
+                <p>
+                    Sign in to save your favourite places and build your own Northumberland.
+                </p>
+            </div>
+
+            <form class="account-form" id="login-form">
+
+                <div class="account-field">
+
+                    <label for="login-email">
+                        Email address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="login-email"
+                        name="email"
+                        autocomplete="email"
+                        placeholder="you@example.com"
+                        required
+                    >
+
+                </div>
+
+                <div class="account-field">
+
+                    <div class="account-field-header">
+
+                        <label for="login-password">
+                            Password
+                        </label>
+
+                        <a href="/forgot-password/">
+                            Forgotten password?
+                        </a>
+
+                    </div>
+
+                    <input
+                        type="password"
+                        id="login-password"
+                        name="password"
+                        autocomplete="current-password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="account-submit"
+                >
+                    Sign in
+                </button>
+
+            </form>
+
+            <div class="account-divider">
+                <span>New to Through Northumberland?</span>
+            </div>
+
+            <a
+                href="/signup/"
+                class="account-secondary"
+            >
+                Create an account
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/assets/js/supabase-client.js"></script>
+<script>
+    const loginForm = document.getElementById("login-form");
+
+    loginForm.addEventListener("submit", async function (event) {
+
+        event.preventDefault();
+
+        const email = document.getElementById("login-email").value.trim();
+        const password = document.getElementById("login-password").value;
+
+        const { data, error } = await window.tnSupabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+        if (error) {
+            alert(error.message);
+            return;
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get("redirect");
+
+        window.location.href =
+            redirect || "/account/";
+
+    });
+</script>

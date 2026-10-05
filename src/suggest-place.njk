@@ -1,0 +1,342 @@
+---
+layout: base.njk
+title: Suggest a place | Through Northumberland
+description: Suggest a place, walk, cafe, restaurant or experience for Through Northumberland.
+permalink: /suggest-place/
+---
+
+<section class="account-page">
+
+    <div class="account-container">
+
+        <div class="account-card">
+
+            <div class="account-brand">
+
+                <span class="eyebrow">
+                    COMMUNITY
+                </span>
+
+                <h1>Suggest a place.</h1>
+
+                <p>
+                    Know somewhere that deserves to be on Through Northumberland?
+                    Tell us about it.
+                </p>
+
+            </div>
+
+
+            <form
+                class="account-form"
+                id="suggest-place-form"
+            >
+
+                <div class="account-field">
+
+                    <label for="suggest-title">
+                        Place name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="suggest-title"
+                        name="title"
+                        placeholder="e.g. Craster Harbour"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="account-field">
+
+                    <label for="suggest-type">
+                        What type of place is it?
+                    </label>
+
+                    <select
+                        id="suggest-type"
+                        name="type"
+                        required
+                    >
+
+                        <option value="">
+                            Choose a type
+                        </option>
+
+                        <option value="Place of interest">
+                            Place of interest
+                        </option>
+
+                        <option value="Walk or trail">
+                            Walk or trail
+                        </option>
+
+                        <option value="Beach">
+                            Beach
+                        </option>
+
+                        <option value="Cafe or restaurant">
+                            Cafe or restaurant
+                        </option>
+
+                        <option value="Pub">
+                            Pub
+                        </option>
+
+                        <option value="Village or town">
+                            Village or town
+                        </option>
+
+                        <option value="Accommodation">
+                            Accommodation
+                        </option>
+
+                        <option value="Activity or experience">
+                            Activity or experience
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="account-field">
+
+                    <label for="suggest-description">
+                        Tell us about it
+                    </label>
+
+                    <textarea
+                        id="suggest-description"
+                        name="description"
+                        rows="5"
+                        placeholder="What is it and what makes it worth visiting?"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="account-field">
+
+                    <label for="suggest-reason">
+                        Why do you recommend it?
+                    </label>
+
+                    <textarea
+                        id="suggest-reason"
+                        name="reason"
+                        rows="4"
+                        placeholder="What do you like about it?"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="account-field">
+
+                    <label for="suggest-address">
+                        Address
+                    </label>
+
+                    <input
+                        type="text"
+                        id="suggest-address"
+                        name="address"
+                        placeholder="Street, village or town"
+                    >
+
+                </div>
+
+
+                <div class="account-field">
+
+                    <label for="suggest-postcode">
+                        Postcode
+                    </label>
+
+                    <input
+                        type="text"
+                        id="suggest-postcode"
+                        name="postcode"
+                        placeholder="NE66 1XX"
+                    >
+
+                </div>
+
+
+                <div class="account-field">
+
+                    <label for="suggest-website">
+                        Website
+                    </label>
+
+                    <input
+                        type="url"
+                        id="suggest-website"
+                        name="website"
+                        placeholder="https://"
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="account-submit"
+                >
+                    Submit suggestion
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+        const form =
+            document.getElementById("suggest-place-form");
+
+        const {
+            data: {
+                user
+            }
+        } = await window.tnSupabase.auth.getUser();
+
+
+        if (!user) {
+
+            window.location.href =
+                "/login/?redirect=/suggest-place/";
+
+            return;
+
+        }
+
+
+        form.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                const submitButton =
+                    form.querySelector(
+                        'button[type="submit"]'
+                    );
+
+
+                submitButton.disabled = true;
+                submitButton.textContent =
+                    "Submitting...";
+
+
+                const {
+                    error
+                } = await window.tnSupabase
+                    .from("place_suggestions")
+                    .insert({
+
+                        user_id: user.id,
+
+                        title:
+                            document.getElementById(
+                                "suggest-title"
+                            ).value.trim(),
+
+                        type:
+                            document.getElementById(
+                                "suggest-type"
+                            ).value,
+
+                        description:
+                            document.getElementById(
+                                "suggest-description"
+                            ).value.trim(),
+
+                        reason:
+                            document.getElementById(
+                                "suggest-reason"
+                            ).value.trim(),
+
+                        address:
+                            document.getElementById(
+                                "suggest-address"
+                            ).value.trim() || null,
+
+                        postcode:
+                            document.getElementById(
+                                "suggest-postcode"
+                            ).value.trim() || null,
+
+                        website:
+                            document.getElementById(
+                                "suggest-website"
+                            ).value.trim() || null
+
+                    });
+
+
+                if (error) {
+
+                    console.error(
+                        "Suggestion error:",
+                        error
+                    );
+
+                    alert(
+                        "Sorry, we couldn't submit your suggestion. Please try again."
+                    );
+
+                    submitButton.disabled = false;
+                    submitButton.textContent =
+                        "Submit suggestion";
+
+                    return;
+
+                }
+
+
+                form.innerHTML = `
+                    <div class="account-success">
+                        <h2>Thanks for the suggestion.</h2>
+
+                        <p>
+                            We've received your suggestion and will
+                            review it before adding it to Through
+                            Northumberland.
+                        </p>
+
+                        <a
+                            href="/"
+                            class="account-submit"
+                        >
+                            Back to homepage
+                        </a>
+                    </div>
+                `;
+
+            }
+        );
+
+    }
+);
+
+</script>

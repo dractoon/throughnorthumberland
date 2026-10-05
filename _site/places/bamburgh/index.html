@@ -17,7 +17,8 @@
 </head>
 
 <body>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/assets/js/supabase-client.js"></script>
     <header class="site-header">
     <div class="container header-inner">
 
@@ -28,15 +29,184 @@
             <strong>northumberland</strong>
         </a>
 
-        <nav class="main-nav">
-            <a href="/">Explore</a>
-            <a href="/places/">Places</a>
-            <a href="#">Food &amp; Drink</a>
-            <a href="#">Stay</a>
+        <nav class="desktop-nav">
+            <a href="/explore/">Explore</a>
+            <a href="/explore/?category=harbours-coast,villages-towns,castles-history,nature-wildlife">Places</a>
+            <a href="/explore/?category=food-drink">Food &amp; Drink</a>
+            <a href="/explore/?category=places-to-stay">Stay</a>
         </nav>
+
+        <div class="header-account-wrap">
+
+            <a
+                href="/login/"
+                class="header-account"
+                id="header-account-button"
+                aria-label="Account"
+            >
+                <span class="header-account-icon" aria-hidden="true">
+                    <span class="user-icon-head"></span>
+                    <span class="user-icon-body"></span>
+                </span>
+
+                <span
+                    class="header-account-text"
+                    id="header-account-text"
+                >
+                    Account
+                </span>
+            </a>
+
+            <div
+                class="header-account-menu"
+                id="header-account-menu"
+                hidden
+            >
+                <a href="/account/">My Account</a>
+
+                <button
+                    type="button"
+                    id="header-logout"
+                >
+                    Log out
+                </button>
+            </div>
+
+        </div>
 
     </div>
 </header>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+
+    const accountButton =
+        document.getElementById("header-account-button");
+
+    const accountText =
+        document.getElementById("header-account-text");
+
+    const accountMenu =
+        document.getElementById("header-account-menu");
+
+    const logoutButton =
+        document.getElementById("header-logout");
+
+
+    if (
+        !accountButton ||
+        !accountText ||
+        !accountMenu ||
+        !logoutButton
+    ) {
+        return;
+    }
+
+
+    /* -----------------------------------------
+       CHECK LOGIN STATUS
+       ----------------------------------------- */
+
+    if (window.tnSupabase) {
+
+        const {
+            data: {
+                user
+            }
+        } = await window.tnSupabase.auth.getUser();
+
+
+        if (user) {
+
+            accountButton.href = "/account/";
+            accountText.textContent = "My Account";
+
+            accountButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+
+            accountButton.addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+
+                    const isOpen =
+                        !accountMenu.hidden;
+
+                    accountMenu.hidden = isOpen;
+
+                    accountButton.setAttribute(
+                        "aria-expanded",
+                        String(!isOpen)
+                    );
+
+                }
+            );
+
+        }
+
+    }
+
+
+    /* -----------------------------------------
+       LOG OUT
+       ----------------------------------------- */
+
+    logoutButton.addEventListener(
+        "click",
+        async function () {
+
+            if (!window.tnSupabase) {
+                return;
+            }
+
+            const {
+                error
+            } = await window.tnSupabase.auth.signOut();
+
+            if (!error) {
+
+                window.location.href = "/";
+
+            }
+
+        }
+    );
+
+
+    /* -----------------------------------------
+       CLOSE MENU WHEN CLICKING ELSEWHERE
+       ----------------------------------------- */
+
+    document.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                !accountMenu.hidden &&
+                !event.target.closest(
+                    ".header-account-wrap"
+                )
+            ) {
+
+                accountMenu.hidden = true;
+
+                accountButton.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+        }
+    );
+
+});
+</script>
 
     <main>
         
@@ -45,51 +215,129 @@
     <!-- PLACE HERO -->
     <section class="place-hero">
         <div class="container">
+            
 
             <div class="place-hero-image">
-                <img src="/assets/images/places/bamburgh.jpg" alt="Bamburgh">
-            </div>
-
-            <div class="place-hero-content">
-
-                <div class="place-meta">
-                    <span>Coast</span>
-                    <span>★★★★★</span>
-                </div>
-
-                <h1>Bamburgh</h1>
-
-                <p class="place-intro">
-                    A spectacular coastal village overlooked by one of England&#39;s most iconic castles, with miles of sandy beach and some of Northumberland&#39;s finest scenery.
-                </p>
-
-                <button class="save-button" type="button">
-                    ♡ Save
-                </button>
-
+                <img src="https://tcaepknuazhjueynkwye.supabase.co/storage/v1/object/public/place-images/places/bamburgh-8b8732a9-5cbd-4e85-8460-8b73fb41d086.jpg" alt="Bamburgh">
             </div>
 
         </div>
     </section>
 
 
-    <!-- OVERVIEW -->
-    <section class="place-section">
-        <div class="container place-content">
+<!-- ABOUT + MAP -->
+<section class="place-section place-section-white place-about-section">
 
-            <div class="place-section-heading">
-                <span class="eyebrow">THE LOWDOWN</span>
-                <h2>Why visit Bamburgh?</h2>
-            </div>
+    <div class="container place-about-grid">
 
-            <div class="place-section-text">
-                <p>
-                    Bamburgh is one of those places that feels instantly recognisable. Its huge castle dominates the skyline above a sweeping stretch of golden sand, while the village itself offers places to eat, drink and explore. Whether you&#39;re visiting for the castle, the beach, the views or simply a day by the coast, Bamburgh is one of Northumberland&#39;s essential places to experience.
-                </p>
-            </div>
+        <!-- ABOUT -->
+        <div class="place-about-content">
+<div class="place-title-row">
+
+    <div class="place-title-content">
+
+        <h1>Bamburgh</h1>
+
+        <div
+            class="place-rating"
+            id="place-rating"
+            data-place-id="1"
+        >
+
+            
+
+                <span class="place-rating-no-ratings">
+                    No ratings yet
+                </span>
+
+            
 
         </div>
-    </section>
+
+    </div>
+
+    <button
+        type="button"
+        class="place-favourite"
+        id="place-favourite"
+        data-place-id="1"
+        aria-label="Save Bamburgh to favourites"
+    >
+        <span class="place-favourite-icon">♡</span>
+        <span class="place-favourite-text">Save</span>
+    </button>
+
+</div>
+        <div class="place-coordinates">
+            <span>LAT 55.606</span>
+            <span>LON -1.709</span>
+        </div>
+<div class="place-about-text">
+
+    
+    <p class="place-about-intro">
+        Bamburgh is one of Northumberland&#39;s most recognisable coastal villages, where a magnificent castle, huge sandy beach and centuries of history come together in one unforgettable setting.
+    </p>
+    
+
+    
+    <p>
+        Set high above the Northumberland coast, Bamburgh is one of the county&#39;s most iconic places to visit. The village is dominated by Bamburgh Castle, perched dramatically on a rocky outcrop overlooking the sea, while Bamburgh Beach stretches away beneath the dunes.
+
+Explore the castle and its grounds, discover the story of Grace Darling, wander through the village, or simply walk the beach with views towards Holy Island and the Farne Islands. There are also cafés, pubs, shops and family-friendly attractions, making Bamburgh an easy place to spend anything from a couple of hours to a full day.
+    </p>
+    
+
+</div>
+
+        </div>
+
+        <!-- MAP -->
+        
+
+        <div class="place-about-map">
+            <div class="place-map-heading">
+                        
+        
+            </div>
+
+            <div
+                id="place-map"
+                class="place-map"
+                data-latitude="55.606"
+                data-longitude="-1.709"
+                data-title="Bamburgh"
+            ></div>
+                
+    <div class="place-getting-there">
+
+        <div class="place-getting-there-heading">
+            <div class="place-getting-there-icon">
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M5 17h14"></path>
+                    <path d="M7 17V8h10v9"></path>
+                    <path d="M9 8V5h6v3"></path>
+                    <circle cx="9" cy="17" r="1.5"></circle>
+                    <circle cx="15" cy="17" r="1.5"></circle>
+                </svg>
+            </div>
+
+            <span class="eyebrow">GETTING THERE</span>
+
+        </div>
+        <p>Bamburgh is easiest to reach by car via the A1. From the north, leave the A1 at Adderstone Services and follow the B1341 towards the coast. From the south, leave the A1 at Alnwick and follow the B1340 or B1342 towards Bamburgh. Buses also serve the village from surrounding towns including Alnwick and Berwick-upon-Tweed.</p>
+
+    </div>
+    
+
+        </div>
+
+        
+
+    </div>
+
+</section>
+
 
 
     <!-- HIGHLIGHTS -->
@@ -107,13 +355,48 @@
 
                 <div class="place-highlight">
 
-                <div class="place-highlight-image">
-                    <img src="/assets/images/places/bamburgh-castle.jpg" alt="Bamburgh Castle">
+
+
+<div class="place-highlight-image">
+
+    <img
+        src="https://tcaepknuazhjueynkwye.supabase.co/storage/v1/object/public/place-highlights/bamburgh/highlight-1790001656416-0yis40.jpg"
+        alt="Bamburgh Walled Garden"
+        loading="lazy"
+    >
+
+</div>
+
+
+
+                    <div class="place-highlight-content">
+                        <h3>Bamburgh Walled Garden</h3>
+                        <p>Bamburgh Walled Garden is a beautiful historic garden beside Bamburgh Castle, featuring colourful flower beds, mature trees and peaceful paths. It’s a lovely place to explore and enjoy a quieter side of Bamburgh.</p>
+                    </div>
+
                 </div>
+
+                
+
+                <div class="place-highlight">
+
+
+
+<div class="place-highlight-image">
+
+    <img
+        src="https://tcaepknuazhjueynkwye.supabase.co/storage/v1/object/public/place-highlights/bamburgh/highlight-1790003181283-f2ggpx.jpg"
+        alt="Bamburgh Castle"
+        loading="lazy"
+    >
+
+</div>
+
+
 
                     <div class="place-highlight-content">
                         <h3>Bamburgh Castle</h3>
-                        <p>Explore the spectacular castle that dominates the village and coastline, with centuries of history and impressive views across the North Sea.</p>
+                        <p>Explore one of Northumberland&#39;s most spectacular castles, perched dramatically above the coastline. Discover royal history, impressive state rooms, ancient artefacts and sweeping views across the North Sea.</p>
                     </div>
 
                 </div>
@@ -122,28 +405,23 @@
 
                 <div class="place-highlight">
 
-                <div class="place-highlight-image">
-                    <img src="/assets/images/places/bamburgh-beach.jpg" alt="Bamburgh Beach">
-                </div>
+
+
+<div class="place-highlight-image">
+
+    <img
+        src="https://tcaepknuazhjueynkwye.supabase.co/storage/v1/object/public/place-highlights/bamburgh/highlight-1790003231959-yzn2ef.jpg"
+        alt="Bamburgh Beach"
+        loading="lazy"
+    >
+
+</div>
+
+
 
                     <div class="place-highlight-content">
                         <h3>Bamburgh Beach</h3>
-                        <p>Walk the huge sweep of sandy beach beneath the castle and take in views across to the Farne Islands.</p>
-                    </div>
-
-                </div>
-
-                
-
-                <div class="place-highlight">
-
-                <div class="place-highlight-image">
-                    <img src="/assets/images/places/bamburgh-village.jpg" alt="The Village">
-                </div>
-
-                    <div class="place-highlight-content">
-                        <h3>The Village</h3>
-                        <p>Wander through Bamburgh&#39;s small collection of shops, cafés, pubs and places to stop for something to eat.</p>
+                        <p>Walk the wide sweep of golden sand beneath Bamburgh Castle, with huge views across the North Sea towards the Farne Islands and Holy Island. It&#39;s perfect for a coastal walk, fresh air and spectacular photographs.</p>
                     </div>
 
                 </div>
@@ -156,63 +434,691 @@
     </section>
 
 
-    <!-- GOOD TO KNOW -->
-    <section class="place-section">
-        <div class="container place-content">
+<!-- AT A GLANCE -->
+<section class="place-section place-section-white">
 
-            <div class="place-section-heading">
-                <span class="eyebrow">GOOD TO KNOW</span>
-                <h2>Before you go</h2>
+    <div class="container">
+
+        <div class="place-section-heading">
+            <span class="eyebrow">AT A GLANCE</span>
+            <h2>Good to know</h2>
+        </div>
+
+        <div class="place-info-grid">
+
+            
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"></path>
+                        <circle cx="12" cy="9" r="2.5"></circle>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">ADDRESS</span>
+                <p>Bamburgh, Northumberland</p>
+
             </div>
+            
 
-            <div class="place-info-grid">
+            
+            <div class="place-info-card">
 
-                <div class="place-info-card">
-                    <span class="place-info-label">GETTING THERE</span>
-                    <p>Bamburgh is on the Northumberland coast, around 15 minutes from Alnwick by car. The nearest railway station is at Chathill.</p>
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                        <path d="M8 8h8M8 12h8M8 16h5"></path>
+                    </svg>
                 </div>
 
-                <div class="place-info-card">
-                    <span class="place-info-label">BEST TIME TO VISIT</span>
-                    <p>Early morning and late afternoon are particularly good for quieter walks, softer light and fewer visitors.</p>
-                </div>
-
-                <div class="place-info-card">
-                    <span class="place-info-label">PARKING</span>
-                    <p>Several car parks are available in and around the village, with additional parking close to the beach.</p>
-                </div>
+                <span class="place-info-label">POSTCODE</span>
+                <p>NE69 7AE</p>
 
             </div>
+            
+
+            
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="5" y="4" width="14" height="16" rx="2"></rect>
+                        <path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">PARKING</span>
+                <p>Parking is available at Bamburgh Village Car Park opposite the castle, Bamburgh Castle Links Car Park, the seasonal Glebe Field near St Aidan&#39;s Church and other locations around the village. Castle parking is reserved for castle visitors. Parking can become busy during peak periods, so arriving early is recommended.</p>
+
+            </div>
+            
+
+            
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="8"></circle>
+                        <path d="M12 8v4l3 2"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">BEST TIME TO VISIT</span>
+                <p>Spring and summer offer the best chance of enjoying the beach, dunes and coastal walks, while early mornings and later afternoons can be quieter. Bamburgh is also worth visiting outside the main season, when the village and coastline take on a much wilder feel.</p>
+
+            </div>
+            
+
+            
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 10c-2 0-3-1.5-3-3.5S5 3 7 3s3 1.5 3 3.5"></path>
+                        <path d="M17 10c2 0 3-1.5 3-3.5S19 3 17 3s-3 1.5-3 3.5"></path>
+                        <path d="M7 10c-2 1-3 3-3 5.5C4 19 7 21 12 21s8-2 8-5.5c0-2.5-1-4.5-3-5.5"></path>
+                        <path d="M9 15c1 1 5 1 6 0"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">DOG FRIENDLY</span>
+                <p>Yes – dogs are welcome on Bamburgh Beach and in many outdoor areas, although individual attractions have their own restrictions. Bamburgh Castle allows dogs in its grounds, while some indoor attractions do not.</p>
+
+            </div>
+            
+
+            
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="9" cy="7" r="2.5"></circle>
+                        <circle cx="16" cy="8" r="2"></circle>
+                        <path d="M4 18c0-3 2-5 5-5s5 2 5 5"></path>
+                        <path d="M14 14c3 0 5 1.5 5 4"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">FAMILY FRIENDLY</span>
+                <p>Excellent – the beach, castle, playgrounds, museums, cafés and wide open spaces make Bamburgh a great choice for families.</p>
+
+            </div>
+            
+
+            
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="4" r="2"></circle>
+                        <path d="M7 8h10"></path>
+                        <path d="M12 6v6"></path>
+                        <path d="M12 12l-4 7"></path>
+                        <path d="M12 12l4 7"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">ACCESSIBILITY</span>
+                <p>Good – accessible facilities are available at several locations. Bamburgh Walled Garden provides step-free access and a Changing Places Toilet. Some parts of Bamburgh Castle have steep paths, although accessible parking and a shuttle service are available.</p>
+
+            </div>
+            
+
+            
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="8" cy="5" r="2"></circle>
+                        <path d="M5 9h6l-1 7H6z"></path>
+                        <circle cx="16" cy="5" r="2"></circle>
+                        <path d="M14 9h4l1 10h-6z"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">TOILETS</span>
+                <p>Public toilets are available in the village, with additional facilities at Bamburgh Castle and other attractions.</p>
+
+            </div>
+            
+
+            
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="8"></circle>
+                        <path d="M12 8v4l3 2"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">OPENING HOURS</span>
+                <p>Bamburgh village and beach are accessible year-round. Individual attractions and businesses have their own opening hours, so check before travelling.</p>
+
+            </div>
+            
+
+            
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="8"></circle>
+                        <path d="M4 12h16"></path>
+                        <path d="M12 4c2 2.2 3 4.8 3 8s-1 5.8-3 8"></path>
+                        <path d="M12 4c-2 2.2-3 4.8-3 8s1 5.8 3 8"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">WEBSITE</span>
+
+                <p>
+                    <a
+                        href="https://www.bamburgh.org.uk/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Visit official website →
+                    </a>
+                </p>
+
+            </div>
+            
 
         </div>
-    </section>
+    </div>
+
+</section>
+
+<!-- WHILE YOU'RE HERE -->
 
 
-    <!-- MAP -->
-    <section class="place-map-section">
-        <div class="container">
+<section class="place-section place-section-alt place-nearby-section">
 
-            <div class="place-map-placeholder">
-                <span>MAP</span>
-                <p>Bamburgh</p>
+    <div class="container">
+
+        <div class="place-section-heading">
+            <span class="eyebrow">NEARBY</span>
+            <h2>While you're here</h2>
+        </div>
+
+        <div class="place-nearby-list">
+
+            
+
+            <div class="place-nearby-item">
+
+                <strong>Bamburgh Beach</strong>
+
+                
+                <span>5 min walk</span>
+                
+
             </div>
 
+            
+
+            <div class="place-nearby-item">
+
+                <strong>Bamburgh Castle</strong>
+
+                
+                <span>5 min walk</span>
+                
+
+            </div>
+
+            
+
+            <div class="place-nearby-item">
+
+                <strong>Grace Darling Museum</strong>
+
+                
+                <span>2 min walk</span>
+                
+
+            </div>
+
+            
+
+            <div class="place-nearby-item">
+
+                <strong>Bamburgh Walled Garden</strong>
+
+                
+                <span>2 min walk</span>
+                
+
+            </div>
+
+            
+
+            <div class="place-nearby-item">
+
+                <strong>Seahouses</strong>
+
+                
+                <span>10 min drive</span>
+                
+
+            </div>
+
+            
+
+            <div class="place-nearby-item">
+
+                <strong>Holy Island</strong>
+
+                
+                <span>25 min drive</span>
+                
+
+            </div>
+
+            
+
         </div>
-    </section>
+
+    </div>
+
+</section>
+
 
 
     <!-- BACK TO PLACES -->
     <section class="place-bottom">
         <div class="container">
-
-            <a href="/places/" class="back-link">
-                ← Back to places
+            <a href="/explore/" class="back-link">
+                ← Back to Explore
             </a>
-
         </div>
     </section>
 
 </article>
+
+
+
+<link rel="stylesheet" href="/assets/leaflet.css">
+
+<script src="/assets/leaflet.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const mapElement = document.getElementById("place-map");
+
+    if (!mapElement) return;
+
+    const latitude = Number(mapElement.dataset.latitude);
+    const longitude = Number(mapElement.dataset.longitude);
+    const title = mapElement.dataset.title;
+
+    const customIcon = L.icon({
+        iconUrl: "/assets/marker-icon.png",
+        iconRetinaUrl: "/assets/marker-icon-2x.png",
+        shadowUrl: "/assets/marker-shadow.png",
+
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+
+    const map = L.map("place-map").setView(
+        [latitude, longitude],
+        13
+    );
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const marker = L.marker(
+        [latitude, longitude],
+        { icon: customIcon }
+    ).addTo(map);
+
+    marker.bindPopup(`
+        <strong>${title}</strong>
+    `).openPopup();
+
+});
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", async function () {
+
+    const ratingElement =
+        document.getElementById("place-rating");
+
+    if (!ratingElement) return;
+
+    const placeId =
+        Number(ratingElement.dataset.placeId);
+
+    if (!placeId) return;
+
+    const {
+        data: {
+            user
+        }
+    } = await window.tnSupabase.auth.getUser();
+
+
+    /* -----------------------------------------
+       RATING DISPLAY
+       ----------------------------------------- */
+
+    function renderRating(average, count, userRating) {
+
+        let stars = "";
+
+        for (let i = 1; i <= 5; i++) {
+
+            const filled =
+                userRating
+                    ? i <= userRating
+                    : i <= Math.round(average);
+
+            stars += `
+                <button
+                    type="button"
+                    class="place-rating-star"
+                    data-rating="${i}"
+                    aria-label="Rate ${i} out of 5"
+                >
+                    ${filled ? "★" : "☆"}
+                </button>
+            `;
+
+        }
+
+
+ratingElement.innerHTML = `
+
+    ${userRating ? `
+        <span class="place-rating-your-rating">
+            Your rating: ${userRating}/5
+        </span>
+    ` : ""}
+
+    <div class="place-rating-stars">
+                ${stars}
+            </div>
+
+            <span class="place-rating-score">
+                ${count ? average : ""}
+            </span>
+
+            <span class="place-rating-count">
+                ${count ? `(${count})` : "No ratings yet"}
+            </span>
+
+        `;
+
+
+        ratingElement
+            .querySelectorAll(".place-rating-star")
+            .forEach(function (button) {
+
+                button.addEventListener(
+                    "click",
+                    async function () {
+
+                        if (!user) {
+
+                            window.location.href =
+                                "/login/";
+
+                            return;
+
+                        }
+
+                        const rating =
+                            Number(
+                                button.dataset.rating
+                            );
+
+                        button.disabled = true;
+
+
+                        const {
+                            error
+                        } = await window.tnSupabase
+                            .from("place_ratings")
+                            .upsert(
+                                {
+                                    user_id: user.id,
+                                    place_id: placeId,
+                                    rating: rating,
+                                    updated_at:
+                                        new Date().toISOString()
+                                },
+                                {
+                                    onConflict:
+                                        "user_id,place_id"
+                                }
+                            );
+
+
+                        if (error) {
+
+                            console.error(
+                                "Rating error:",
+                                error
+                            );
+
+                            button.disabled = false;
+
+                            return;
+
+                        }
+
+
+                        await loadRating();
+
+                    }
+                );
+
+            });
+
+    }
+
+
+    /* -----------------------------------------
+       LOAD RATINGS
+       ----------------------------------------- */
+
+    async function loadRating() {
+
+        const {
+            data: summary
+        } = await window.tnSupabase
+            .from("place_rating_summary")
+            .select(
+                "average_rating, rating_count"
+            )
+            .eq("place_id", placeId)
+            .maybeSingle();
+
+
+        let userRating = null;
+
+
+        if (user) {
+
+            const {
+                data: existingRating
+            } = await window.tnSupabase
+                .from("place_ratings")
+                .select("rating")
+                .eq("user_id", user.id)
+                .eq("place_id", placeId)
+                .maybeSingle();
+
+
+            if (existingRating) {
+
+                userRating =
+                    existingRating.rating;
+
+            }
+
+        }
+
+
+        renderRating(
+            summary
+                ? Number(summary.average_rating)
+                : 0,
+            summary
+                ? Number(summary.rating_count)
+                : 0,
+            userRating
+        );
+
+    }
+
+
+    await loadRating();
+
+});
+
+</script>
+<script>
+
+document.addEventListener("DOMContentLoaded", async function () {
+
+    const favouriteButton =
+        document.getElementById("place-favourite");
+
+    if (!favouriteButton) return;
+
+    const placeId =
+        Number(favouriteButton.dataset.placeId);
+
+    if (!placeId) return;
+
+    const {
+        data: {
+            user
+        }
+    } = await window.tnSupabase.auth.getUser();
+
+
+    function updateButton(saved) {
+
+        if (saved) {
+
+            favouriteButton.classList.add("is-saved");
+
+            favouriteButton.querySelector(
+                ".place-favourite-icon"
+            ).textContent = "♥";
+
+            favouriteButton.querySelector(
+                ".place-favourite-text"
+            ).textContent = "Saved";
+
+        } else {
+
+            favouriteButton.classList.remove("is-saved");
+
+            favouriteButton.querySelector(
+                ".place-favourite-icon"
+            ).textContent = "♡";
+
+            favouriteButton.querySelector(
+                ".place-favourite-text"
+            ).textContent = "Save";
+
+        }
+
+    }
+
+
+    if (user) {
+
+        const {
+            data: favourite
+        } = await window.tnSupabase
+            .from("favourites")
+            .select("id")
+            .eq("user_id", user.id)
+            .eq("place_id", placeId)
+            .maybeSingle();
+
+        updateButton(!!favourite);
+
+    }
+
+
+    favouriteButton.addEventListener(
+        "click",
+        async function () {
+
+            if (!user) {
+
+                window.location.href = "/login/";
+
+                return;
+
+            }
+
+
+            const isSaved =
+                favouriteButton.classList.contains("is-saved");
+
+
+            favouriteButton.disabled = true;
+
+
+            if (isSaved) {
+
+                const { error } =
+                    await window.tnSupabase
+                        .from("favourites")
+                        .delete()
+                        .eq("user_id", user.id)
+                        .eq("place_id", placeId);
+
+                if (!error) {
+
+                    updateButton(false);
+
+                }
+
+            } else {
+
+                const { error } =
+                    await window.tnSupabase
+                        .from("favourites")
+                        .insert({
+                            user_id: user.id,
+                            place_id: placeId
+                        });
+
+                if (!error) {
+
+                    updateButton(true);
+
+                }
+
+            }
+
+
+            favouriteButton.disabled = false;
+
+        }
+    );
+
+});
+
+</script>
+
     </main>
 
     <footer class="site-footer">
@@ -231,12 +1137,12 @@
             </p>
         </div>
 
-        <div class="footer-links">
-            <a href="/">Explore</a>
-            <a href="/places/">Places</a>
-            <a href="#">Food &amp; Drink</a>
-            <a href="#">Stay</a>
-        </div>
+<div class="footer-links">
+    <a href="/explore/">Explore</a>
+    <a href="/explore/?category=harbours-coast,villages-towns,castles-history,nature-wildlife">Places</a>
+    <a href="/explore/?category=food-drink">Food &amp; Drink</a>
+    <a href="/explore/?category=places-to-stay">Stay</a>
+</div>
 
     </div>
 

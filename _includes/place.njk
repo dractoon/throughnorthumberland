@@ -1,57 +1,153 @@
 ---
 layout: base.njk
 ---
-{% set place_data = places[place] %}
+{% set place_data = current_place or places[place] %}
 <article class="place-page">
 
     <!-- PLACE HERO -->
     <section class="place-hero">
         <div class="container">
+            
 
             <div class="place-hero-image">
                 <img src="{{ place_data.image }}" alt="{{ place_data.title }}">
             </div>
 
-            <div class="place-hero-content">
-
-                <div class="place-meta">
-                    <span>{{ place_data.category }}</span>
-                    <span>★★★★★</span>
-                </div>
-
-                <h1>{{ place_data.title }}</h1>
-
-                <p class="place-intro">
-                    {{ place_data.intro }}
-                </p>
-
-                <button class="save-button" type="button">
-                    ♡ Save
-                </button>
-
-            </div>
-
         </div>
     </section>
 
 
-    <!-- OVERVIEW -->
-    <section class="place-section">
-        <div class="container place-content">
+<!-- ABOUT + MAP -->
+<section class="place-section place-section-white place-about-section">
 
-            <div class="place-section-heading">
-                <span class="eyebrow">THE LOWDOWN</span>
-                <h2>Why visit {{ place_data.title }}?</h2>
-            </div>
+    <div class="container place-about-grid">
 
-            <div class="place-section-text">
-                <p>
-                    {{ place_data.overview }}
-                </p>
-            </div>
+        <!-- ABOUT -->
+        <div class="place-about-content">
+<div class="place-title-row">
+
+    <div class="place-title-content">
+
+        <h1>{{ place_data.title }}</h1>
+
+        <div
+            class="place-rating"
+            id="place-rating"
+            data-place-id="{{ place_data.id }}"
+        >
+
+            {% if place_data.rating.count > 0 %}
+
+                <span class="place-rating-stars">
+                    {% for i in range(1, 6) %}
+                        {% if i <= place_data.rating.average %}
+                            ★
+                        {% else %}
+                            ☆
+                        {% endif %}
+                    {% endfor %}
+                </span>
+
+                <span class="place-rating-score">
+                    {{ place_data.rating.average }}
+                </span>
+
+                <span class="place-rating-count">
+                    ({{ place_data.rating.count }})
+                </span>
+
+            {% else %}
+
+                <span class="place-rating-no-ratings">
+                    No ratings yet
+                </span>
+
+            {% endif %}
 
         </div>
-    </section>
+
+    </div>
+
+    <button
+        type="button"
+        class="place-favourite"
+        id="place-favourite"
+        data-place-id="{{ place_data.id }}"
+        aria-label="Save {{ place_data.title }} to favourites"
+    >
+        <span class="place-favourite-icon">♡</span>
+        <span class="place-favourite-text">Save</span>
+    </button>
+
+</div>
+        <div class="place-coordinates">
+            <span>LAT {{ place_data.latitude }}</span>
+            <span>LON {{ place_data.longitude }}</span>
+        </div>
+<div class="place-about-text">
+
+    {% if place_data.intro %}
+    <p class="place-about-intro">
+        {{ place_data.intro }}
+    </p>
+    {% endif %}
+
+    {% if place_data.overview %}
+    <p>
+        {{ place_data.overview }}
+    </p>
+    {% endif %}
+
+</div>
+
+        </div>
+
+        <!-- MAP -->
+        {% if place_data.latitude and place_data.longitude %}
+
+        <div class="place-about-map">
+            <div class="place-map-heading">
+                        {% if place_data.latitude and place_data.longitude %}
+        {% endif %}
+            </div>
+
+            <div
+                id="place-map"
+                class="place-map"
+                data-latitude="{{ place_data.latitude }}"
+                data-longitude="{{ place_data.longitude }}"
+                data-title="{{ place_data.title }}"
+            ></div>
+                {% if place_data.getting_there %}
+    <div class="place-getting-there">
+
+        <div class="place-getting-there-heading">
+            <div class="place-getting-there-icon">
+                <svg viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M5 17h14"></path>
+                    <path d="M7 17V8h10v9"></path>
+                    <path d="M9 8V5h6v3"></path>
+                    <circle cx="9" cy="17" r="1.5"></circle>
+                    <circle cx="15" cy="17" r="1.5"></circle>
+                </svg>
+            </div>
+
+            <span class="eyebrow">GETTING THERE</span>
+
+        </div>
+        <p>{{ place_data.getting_there }}</p>
+
+    </div>
+    {% endif %}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
 
 
     <!-- HIGHLIGHTS -->
@@ -69,9 +165,19 @@ layout: base.njk
 
                 <div class="place-highlight">
 
-                <div class="place-highlight-image">
-                    <img src="{{ highlight.image }}" alt="{{ highlight.title }}">
-                </div>
+{% if highlight.image %}
+
+<div class="place-highlight-image">
+
+    <img
+        src="{{ highlight.image }}"
+        alt="{{ highlight.title }}"
+        loading="lazy"
+    >
+
+</div>
+
+{% endif %}
 
                     <div class="place-highlight-content">
                         <h3>{{ highlight.title }}</h3>
@@ -88,60 +194,628 @@ layout: base.njk
     </section>
 
 
-    <!-- GOOD TO KNOW -->
-    <section class="place-section">
-        <div class="container place-content">
+<!-- AT A GLANCE -->
+<section class="place-section place-section-white">
 
-            <div class="place-section-heading">
-                <span class="eyebrow">GOOD TO KNOW</span>
-                <h2>Before you go</h2>
+    <div class="container">
+
+        <div class="place-section-heading">
+            <span class="eyebrow">AT A GLANCE</span>
+            <h2>Good to know</h2>
+        </div>
+
+        <div class="place-info-grid">
+
+            {% if place_data.address %}
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"></path>
+                        <circle cx="12" cy="9" r="2.5"></circle>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">ADDRESS</span>
+                <p>{{ place_data.address }}</p>
+
             </div>
+            {% endif %}
 
-            <div class="place-info-grid">
+            {% if place_data.postcode %}
+            <div class="place-info-card">
 
-                <div class="place-info-card">
-                    <span class="place-info-label">GETTING THERE</span>
-                    <p>{{ place_data.getting_there }}</p>
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                        <path d="M8 8h8M8 12h8M8 16h5"></path>
+                    </svg>
                 </div>
 
-                <div class="place-info-card">
-                    <span class="place-info-label">BEST TIME TO VISIT</span>
-                    <p>{{ place_data.best_time }}</p>
-                </div>
-
-                <div class="place-info-card">
-                    <span class="place-info-label">PARKING</span>
-                    <p>{{ place_data.parking }}</p>
-                </div>
+                <span class="place-info-label">POSTCODE</span>
+                <p>{{ place_data.postcode }}</p>
 
             </div>
+            {% endif %}
+
+            {% if place_data.parking %}
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="5" y="4" width="14" height="16" rx="2"></rect>
+                        <path d="M9 17V7h3.5a3 3 0 0 1 0 6H9"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">PARKING</span>
+                <p>{{ place_data.parking }}</p>
+
+            </div>
+            {% endif %}
+
+            {% if place_data.best_time %}
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="8"></circle>
+                        <path d="M12 8v4l3 2"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">BEST TIME TO VISIT</span>
+                <p>{{ place_data.best_time }}</p>
+
+            </div>
+            {% endif %}
+
+            {% if place_data.dog_friendly %}
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M7 10c-2 0-3-1.5-3-3.5S5 3 7 3s3 1.5 3 3.5"></path>
+                        <path d="M17 10c2 0 3-1.5 3-3.5S19 3 17 3s-3 1.5-3 3.5"></path>
+                        <path d="M7 10c-2 1-3 3-3 5.5C4 19 7 21 12 21s8-2 8-5.5c0-2.5-1-4.5-3-5.5"></path>
+                        <path d="M9 15c1 1 5 1 6 0"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">DOG FRIENDLY</span>
+                <p>{{ place_data.dog_friendly }}</p>
+
+            </div>
+            {% endif %}
+
+            {% if place_data.family_friendly %}
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="9" cy="7" r="2.5"></circle>
+                        <circle cx="16" cy="8" r="2"></circle>
+                        <path d="M4 18c0-3 2-5 5-5s5 2 5 5"></path>
+                        <path d="M14 14c3 0 5 1.5 5 4"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">FAMILY FRIENDLY</span>
+                <p>{{ place_data.family_friendly }}</p>
+
+            </div>
+            {% endif %}
+
+            {% if place_data.accessibility %}
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="4" r="2"></circle>
+                        <path d="M7 8h10"></path>
+                        <path d="M12 6v6"></path>
+                        <path d="M12 12l-4 7"></path>
+                        <path d="M12 12l4 7"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">ACCESSIBILITY</span>
+                <p>{{ place_data.accessibility }}</p>
+
+            </div>
+            {% endif %}
+
+            {% if place_data.toilets %}
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="8" cy="5" r="2"></circle>
+                        <path d="M5 9h6l-1 7H6z"></path>
+                        <circle cx="16" cy="5" r="2"></circle>
+                        <path d="M14 9h4l1 10h-6z"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">TOILETS</span>
+                <p>{{ place_data.toilets }}</p>
+
+            </div>
+            {% endif %}
+
+            {% if place_data.opening_hours %}
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="8"></circle>
+                        <path d="M12 8v4l3 2"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">OPENING HOURS</span>
+                <p>{{ place_data.opening_hours }}</p>
+
+            </div>
+            {% endif %}
+
+            {% if place_data.website %}
+            <div class="place-info-card">
+
+                <div class="place-info-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="8"></circle>
+                        <path d="M4 12h16"></path>
+                        <path d="M12 4c2 2.2 3 4.8 3 8s-1 5.8-3 8"></path>
+                        <path d="M12 4c-2 2.2-3 4.8-3 8s1 5.8 3 8"></path>
+                    </svg>
+                </div>
+
+                <span class="place-info-label">WEBSITE</span>
+
+                <p>
+                    <a
+                        href="{{ place_data.website }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Visit official website →
+                    </a>
+                </p>
+
+            </div>
+            {% endif %}
 
         </div>
-    </section>
+    </div>
 
+</section>
 
-    <!-- MAP -->
-    <section class="place-map-section">
-        <div class="container">
+<!-- WHILE YOU'RE HERE -->
+{% if place_data.nearby and place_data.nearby.length %}
 
-            <div class="place-map-placeholder">
-                <span>MAP</span>
-                <p>{{ place_data.title }}</p>
+<section class="place-section place-section-alt place-nearby-section">
+
+    <div class="container">
+
+        <div class="place-section-heading">
+            <span class="eyebrow">NEARBY</span>
+            <h2>While you're here</h2>
+        </div>
+
+        <div class="place-nearby-list">
+
+            {% for item in place_data.nearby %}
+
+            <div class="place-nearby-item">
+
+                <strong>{{ item.title }}</strong>
+
+                {% if item.distance %}
+                <span>{{ item.distance }}</span>
+                {% endif %}
+
             </div>
 
-        </div>
-    </section>
+            {% endfor %}
 
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}
 
     <!-- BACK TO PLACES -->
     <section class="place-bottom">
         <div class="container">
-
-            <a href="/places/" class="back-link">
-                ← Back to places
+            <a href="/explore/" class="back-link">
+                ← Back to Explore
             </a>
-
         </div>
     </section>
 
 </article>
+
+{% if place_data.latitude and place_data.longitude %}
+
+<link rel="stylesheet" href="/assets/leaflet.css">
+
+<script src="/assets/leaflet.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const mapElement = document.getElementById("place-map");
+
+    if (!mapElement) return;
+
+    const latitude = Number(mapElement.dataset.latitude);
+    const longitude = Number(mapElement.dataset.longitude);
+    const title = mapElement.dataset.title;
+
+    const customIcon = L.icon({
+        iconUrl: "/assets/marker-icon.png",
+        iconRetinaUrl: "/assets/marker-icon-2x.png",
+        shadowUrl: "/assets/marker-shadow.png",
+
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+
+    const map = L.map("place-map").setView(
+        [latitude, longitude],
+        13
+    );
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const marker = L.marker(
+        [latitude, longitude],
+        { icon: customIcon }
+    ).addTo(map);
+
+    marker.bindPopup(`
+        <strong>${title}</strong>
+    `).openPopup();
+
+});
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", async function () {
+
+    const ratingElement =
+        document.getElementById("place-rating");
+
+    if (!ratingElement) return;
+
+    const placeId =
+        Number(ratingElement.dataset.placeId);
+
+    if (!placeId) return;
+
+    const {
+        data: {
+            user
+        }
+    } = await window.tnSupabase.auth.getUser();
+
+
+    /* -----------------------------------------
+       RATING DISPLAY
+       ----------------------------------------- */
+
+    function renderRating(average, count, userRating) {
+
+        let stars = "";
+
+        for (let i = 1; i <= 5; i++) {
+
+            const filled =
+                userRating
+                    ? i <= userRating
+                    : i <= Math.round(average);
+
+            stars += `
+                <button
+                    type="button"
+                    class="place-rating-star"
+                    data-rating="${i}"
+                    aria-label="Rate ${i} out of 5"
+                >
+                    ${filled ? "★" : "☆"}
+                </button>
+            `;
+
+        }
+
+
+ratingElement.innerHTML = `
+
+    ${userRating ? `
+        <span class="place-rating-your-rating">
+            Your rating: ${userRating}/5
+        </span>
+    ` : ""}
+
+    <div class="place-rating-stars">
+                ${stars}
+            </div>
+
+            <span class="place-rating-score">
+                ${count ? average : ""}
+            </span>
+
+            <span class="place-rating-count">
+                ${count ? `(${count})` : "No ratings yet"}
+            </span>
+
+        `;
+
+
+        ratingElement
+            .querySelectorAll(".place-rating-star")
+            .forEach(function (button) {
+
+                button.addEventListener(
+                    "click",
+                    async function () {
+
+                        if (!user) {
+
+                            window.location.href =
+                                "/login/";
+
+                            return;
+
+                        }
+
+                        const rating =
+                            Number(
+                                button.dataset.rating
+                            );
+
+                        button.disabled = true;
+
+
+                        const {
+                            error
+                        } = await window.tnSupabase
+                            .from("place_ratings")
+                            .upsert(
+                                {
+                                    user_id: user.id,
+                                    place_id: placeId,
+                                    rating: rating,
+                                    updated_at:
+                                        new Date().toISOString()
+                                },
+                                {
+                                    onConflict:
+                                        "user_id,place_id"
+                                }
+                            );
+
+
+                        if (error) {
+
+                            console.error(
+                                "Rating error:",
+                                error
+                            );
+
+                            button.disabled = false;
+
+                            return;
+
+                        }
+
+
+                        await loadRating();
+
+                    }
+                );
+
+            });
+
+    }
+
+
+    /* -----------------------------------------
+       LOAD RATINGS
+       ----------------------------------------- */
+
+    async function loadRating() {
+
+        const {
+            data: summary
+        } = await window.tnSupabase
+            .from("place_rating_summary")
+            .select(
+                "average_rating, rating_count"
+            )
+            .eq("place_id", placeId)
+            .maybeSingle();
+
+
+        let userRating = null;
+
+
+        if (user) {
+
+            const {
+                data: existingRating
+            } = await window.tnSupabase
+                .from("place_ratings")
+                .select("rating")
+                .eq("user_id", user.id)
+                .eq("place_id", placeId)
+                .maybeSingle();
+
+
+            if (existingRating) {
+
+                userRating =
+                    existingRating.rating;
+
+            }
+
+        }
+
+
+        renderRating(
+            summary
+                ? Number(summary.average_rating)
+                : 0,
+            summary
+                ? Number(summary.rating_count)
+                : 0,
+            userRating
+        );
+
+    }
+
+
+    await loadRating();
+
+});
+
+</script>
+<script>
+
+document.addEventListener("DOMContentLoaded", async function () {
+
+    const favouriteButton =
+        document.getElementById("place-favourite");
+
+    if (!favouriteButton) return;
+
+    const placeId =
+        Number(favouriteButton.dataset.placeId);
+
+    if (!placeId) return;
+
+    const {
+        data: {
+            user
+        }
+    } = await window.tnSupabase.auth.getUser();
+
+
+    function updateButton(saved) {
+
+        if (saved) {
+
+            favouriteButton.classList.add("is-saved");
+
+            favouriteButton.querySelector(
+                ".place-favourite-icon"
+            ).textContent = "♥";
+
+            favouriteButton.querySelector(
+                ".place-favourite-text"
+            ).textContent = "Saved";
+
+        } else {
+
+            favouriteButton.classList.remove("is-saved");
+
+            favouriteButton.querySelector(
+                ".place-favourite-icon"
+            ).textContent = "♡";
+
+            favouriteButton.querySelector(
+                ".place-favourite-text"
+            ).textContent = "Save";
+
+        }
+
+    }
+
+
+    if (user) {
+
+        const {
+            data: favourite
+        } = await window.tnSupabase
+            .from("favourites")
+            .select("id")
+            .eq("user_id", user.id)
+            .eq("place_id", placeId)
+            .maybeSingle();
+
+        updateButton(!!favourite);
+
+    }
+
+
+    favouriteButton.addEventListener(
+        "click",
+        async function () {
+
+            if (!user) {
+
+                window.location.href = "/login/";
+
+                return;
+
+            }
+
+
+            const isSaved =
+                favouriteButton.classList.contains("is-saved");
+
+
+            favouriteButton.disabled = true;
+
+
+            if (isSaved) {
+
+                const { error } =
+                    await window.tnSupabase
+                        .from("favourites")
+                        .delete()
+                        .eq("user_id", user.id)
+                        .eq("place_id", placeId);
+
+                if (!error) {
+
+                    updateButton(false);
+
+                }
+
+            } else {
+
+                const { error } =
+                    await window.tnSupabase
+                        .from("favourites")
+                        .insert({
+                            user_id: user.id,
+                            place_id: placeId
+                        });
+
+                if (!error) {
+
+                    updateButton(true);
+
+                }
+
+            }
+
+
+            favouriteButton.disabled = false;
+
+        }
+    );
+
+});
+
+</script>
+{% endif %}

@@ -1,0 +1,951 @@
+---
+layout: base.njk
+title: Explore Northumberland
+description: Discover places, beaches, walks, food, stays and things to do across Northumberland.
+permalink: /explore/
+---
+
+<section class="explore-page">
+
+    <div class="container">
+
+        <div class="explore-header">
+
+            <div class="explore-header-content">
+
+                <span class="eyebrow">DISCOVER NORTHUMBERLAND</span>
+
+                <h1>
+                    Explore
+                    <span>Northumberland.</span>
+                </h1>
+
+                <p>
+                    Discover places to visit, things to do and experiences across the county.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="explore-toolbar">
+
+    <div class="explore-search">
+        <input
+            type="search"
+            id="explore-search"
+            placeholder="Search Northumberland..."
+            aria-label="Search Northumberland"
+        >
+    </div>
+
+<div class="explore-filters">
+
+    <button
+        class="explore-filter active"
+        data-filter-type="all"
+        data-filter-slug="all"
+    >
+        All
+    </button>
+
+    {% for category in exploreOptions.categories %}
+
+        <button
+            class="explore-filter"
+            data-filter-type="category"
+            data-filter-slug="{{ category.slug | lower }}"
+        >
+            {{ category.name }}
+        </button>
+
+    {% endfor %}
+
+    </div>
+
+
+</div>
+
+        <div class="explore-layout">
+
+            <div class="explore-results">
+
+                <div class="explore-results-header">
+                    <span>{{ places | length }} places</span>
+                </div>
+
+<div class="explore-grid">
+
+    {% for key, place in places %}
+
+        {% if place.status == "published" %}
+
+<article
+    class="places-card explore-card"
+    data-category="{{ place.category }}"
+    data-explore-categories="{{ place.exploreCategorySlugs | join(',') }}"
+    data-features="{{ place.featureSlugs | join(',') }}"
+    data-slug="{{ key }}"
+    data-latitude="{{ place.latitude }}"
+    data-longitude="{{ place.longitude }}"
+>
+
+    <div class="places-card-link explore-card-select">
+
+<div class="places-card-image">
+
+    {% if place.image %}
+        <img
+            src="{{ place.image }}"
+            alt="{{ place.title }}"
+        >
+    {% else %}
+        <div class="placeholder-image">
+            <span>Photo coming soon</span>
+        </div>
+    {% endif %}
+
+    <button
+        type="button"
+        class="explore-favourite"
+        data-place-id="{{ place.id }}"
+        aria-label="Save {{ place.title }} to favourites"
+    >
+        <span class="explore-favourite-icon">♡</span>
+    </button>
+
+</div>
+
+        <div class="places-card-content">
+
+            <div class="places-card-meta">
+                <span>{{ place.category }}</span>
+            </div>
+
+<h2>{{ place.title }}</h2>
+
+{% if place.rating.count > 0 %}
+    <div class="place-rating">
+        <span class="place-rating-stars" aria-label="{{ place.rating.average }} out of 5 stars">
+            {% for i in range(1, 6) %}
+                {% if i <= place.rating.average %}
+                    ★
+                {% else %}
+                    ☆
+                {% endif %}
+            {% endfor %}
+        </span>
+
+        <span class="place-rating-score">
+            {{ place.rating.average }}
+        </span>
+
+        <span class="place-rating-count">
+            ({{ place.rating.count }})
+        </span>
+    </div>
+{% endif %}
+
+<p>{{ place.intro }}</p>
+
+            <a
+                href="/places/{{ key }}/"
+                class="explore-view-place"
+            >
+                View <span>→</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</article>
+                
+
+        {% endif %}
+
+    {% endfor %}
+
+</div>
+
+            </div>
+
+            <div class="explore-map-wrapper">
+
+                <div id="explore-map" class="explore-map"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<link rel="stylesheet" href="/assets/leaflet.css">
+
+<script src="/assets/leaflet.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const mapElement = document.getElementById("explore-map");
+
+    if (!mapElement) return;
+
+    const customIcon = L.icon({
+        iconUrl: "/assets/marker-icon.png",
+        iconRetinaUrl: "/assets/marker-icon-2x.png",
+        shadowUrl: "/assets/marker-shadow.png",
+
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+
+    const map = L.map("explore-map").setView(
+        [55.25, -1.75],
+        10
+    );
+
+L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}.png', {
+    attribution: '&copy; Stadia Maps &copy; OpenStreetMap contributors'
+}).addTo(map);
+
+    const places = [];
+
+    /* -----------------------------------------
+       CREATE MARKERS
+       ----------------------------------------- */
+
+    document.querySelectorAll(".explore-card").forEach(function (card) {
+
+        const latitude = Number(card.dataset.latitude);
+        const longitude = Number(card.dataset.longitude);
+
+        if (
+            !Number.isNaN(latitude) &&
+            !Number.isNaN(longitude)
+        ) {
+
+            const title = card.querySelector("h2").textContent.trim();
+            const slug = card.dataset.slug;
+            const category = card.dataset.category;
+
+const exploreCategories =
+    (card.dataset.exploreCategories || "")
+        .split(",")
+        .map(item => item.trim().toLowerCase())
+        .filter(Boolean);
+
+const features =
+    (card.dataset.features || "")
+        .split(",")
+        .map(item => item.trim().toLowerCase())
+        .filter(Boolean);
+
+            const marker = L.marker(
+                [latitude, longitude],
+                { icon: customIcon }
+            ).addTo(map);
+
+            marker.bindPopup(`
+                <strong>${title}</strong><br>
+                <a href="/places/${slug}/">View place →</a>
+            `);
+
+
+const place = {
+    card: card,
+    marker: marker,
+    title: title,
+    slug: slug,
+    category: category,
+    description: card.querySelector("p").textContent.trim(),
+    exploreCategories: exploreCategories,
+    features: features,
+    latitude: latitude,
+    longitude: longitude
+};
+
+            places.push(place);
+
+
+            /* -----------------------------------------
+               CARD → MAP
+               ----------------------------------------- */
+
+            card.addEventListener("click", function (event) {
+
+                if (
+                    event.target.closest(".explore-view-place")
+                ) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                places.forEach(function (item) {
+                    item.card.classList.remove("active");
+                });
+
+                card.classList.add("active");
+
+                map.flyTo(
+                    [latitude, longitude],
+                    13,
+                    {
+                        duration: 0.8
+                    }
+                );
+
+                marker.openPopup();
+
+            });
+
+
+            /* -----------------------------------------
+               MARKER → CARD
+               ----------------------------------------- */
+
+            marker.on("click", function () {
+
+                places.forEach(function (item) {
+                    item.card.classList.remove("active");
+                });
+
+                card.classList.add("active");
+
+                //card.scrollIntoView({
+                    //behavior: "smooth",
+                   // block: "center"
+               // });
+
+            });
+
+        }
+
+    });
+
+
+ /* -----------------------------------------
+   EXPLORE FILTERS
+   ----------------------------------------- */
+
+const categoryButtons = document.querySelectorAll(
+    ".explore-filter"
+);
+
+let activeCategories = [];
+let searchTerm = "";
+
+const urlParams = new URLSearchParams(window.location.search);
+const urlCategory = urlParams.get("category");
+
+if (urlCategory) {
+
+    const selectedCategories =
+        urlCategory
+            .toLowerCase()
+            .split(",")
+            .map(function (item) {
+                return item.trim();
+            })
+            .filter(Boolean);
+
+    activeCategories = selectedCategories;
+
+    categoryButtons.forEach(function (button) {
+
+        if (
+            selectedCategories.includes(
+                button.dataset.filterSlug
+            )
+        ) {
+            button.classList.add("active");
+        }
+
+    });
+
+}
+
+const searchInput =
+    document.getElementById("explore-search");
+
+
+if (searchInput) {
+
+    searchInput.addEventListener(
+        "input",
+        function () {
+
+            searchTerm =
+                searchInput.value
+                    .trim()
+                    .toLowerCase();
+
+            updateVisiblePlaces();
+
+        }
+    );
+
+}
+
+
+/* -----------------------------------------
+   CATEGORY BUTTONS
+   ----------------------------------------- */
+
+categoryButtons.forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+        const slug =
+            button.dataset.filterSlug;
+
+        if (slug === "all") {
+
+            activeCategories = [];
+
+            categoryButtons.forEach(function (item) {
+                item.classList.remove("active");
+            });
+
+            button.classList.add("active");
+
+        } else {
+
+            if (activeCategories.includes(slug)) {
+
+                activeCategories =
+                    activeCategories.filter(
+                        item => item !== slug
+                    );
+
+                button.classList.remove("active");
+
+            } else {
+
+                activeCategories.push(slug);
+
+                button.classList.add("active");
+
+            }
+
+            const allButton =
+                document.querySelector(
+                    '.explore-filter[data-filter-slug="all"]'
+                );
+
+            if (allButton) {
+
+                allButton.classList.toggle(
+                    "active",
+                    activeCategories.length === 0
+                );
+
+            }
+
+        }
+
+        updateVisiblePlaces();
+
+    });
+
+});
+
+
+/* -----------------------------------------
+   UPDATE CARDS + MAP
+   ----------------------------------------- */
+
+function updateVisiblePlaces() {
+
+    const bounds = map.getBounds();
+
+    let visibleCount = 0;
+
+    places.forEach(function (place) {
+
+        const cardCategories =
+            (place.card.dataset.exploreCategories || "")
+                .split(",")
+                .map(function (item) {
+                    return item.trim().toLowerCase();
+                })
+                .filter(Boolean);
+
+
+        const matchesCategory =
+            activeCategories.length === 0 ||
+            activeCategories.some(function (category) {
+
+                return cardCategories.includes(category);
+
+            });
+
+
+        const matchesSearch =
+            !searchTerm ||
+            place.title
+                .toLowerCase()
+                .includes(searchTerm);
+
+
+        const insideMap =
+            bounds.contains([
+                place.latitude,
+                place.longitude
+            ]);
+
+
+        const shouldShow =
+            matchesCategory &&
+            matchesSearch &&
+            (searchTerm || insideMap);
+
+
+        /* CARD */
+
+        if (shouldShow) {
+
+            place.card.style.display = "";
+
+            visibleCount++;
+
+        } else {
+
+            place.card.style.display = "none";
+
+            place.card.classList.remove("active");
+
+        }
+
+
+        /* MARKER */
+
+        const shouldShowMarker =
+            matchesCategory &&
+            matchesSearch;
+
+        if (shouldShowMarker) {
+
+            if (!map.hasLayer(place.marker)) {
+                place.marker.addTo(map);
+            }
+
+        } else {
+
+            if (map.hasLayer(place.marker)) {
+                map.removeLayer(place.marker);
+            }
+
+        }
+
+    });
+
+
+    /* -----------------------------------------
+       GREY OUT CATEGORIES WITH NO PLACES
+       ----------------------------------------- */
+
+    categoryButtons.forEach(function (button) {
+
+        const slug =
+            button.dataset.filterSlug;
+
+        if (slug === "all") {
+            return;
+        }
+
+
+        const available =
+            places.some(function (place) {
+
+                const categories =
+                    (place.card.dataset.exploreCategories || "")
+                        .split(",")
+                        .map(function (item) {
+                            return item.trim().toLowerCase();
+                        })
+                        .filter(Boolean);
+
+                return categories.includes(slug);
+
+            });
+
+
+        button.disabled =
+            !available &&
+            !activeCategories.includes(slug);
+
+    });
+
+
+    /* -----------------------------------------
+       RESULT COUNT
+       ----------------------------------------- */
+
+    const countElement =
+        document.querySelector(
+            ".explore-results-header span:last-child"
+        );
+
+    if (countElement) {
+
+        countElement.textContent =
+            visibleCount +
+            (
+                visibleCount === 1
+                    ? " place"
+                    : " places"
+            );
+
+    }
+
+}
+
+
+/* -----------------------------------------
+   MAP MOVED / ZOOMED
+   ----------------------------------------- */
+
+map.on("moveend", function () {
+
+    updateVisiblePlaces();
+
+});
+
+
+/* -----------------------------------------
+   INITIAL STATE
+   ----------------------------------------- */
+
+updateVisiblePlaces();
+
+
+});
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", async function () {
+
+    const favouriteButtons =
+        document.querySelectorAll(".explore-favourite");
+
+    if (!favouriteButtons.length) return;
+
+
+    const {
+        data: {
+            user
+        }
+    } = await window.tnSupabase.auth.getUser();
+
+
+    /* -----------------------------------------
+       UPDATE HEART
+       ----------------------------------------- */
+
+    function updateFavourite(button, saved) {
+
+        if (saved) {
+
+            button.classList.add("is-saved");
+
+            button.querySelector(
+                ".explore-favourite-icon"
+            ).textContent = "♥";
+
+            button.setAttribute(
+                "aria-label",
+                "Remove from favourites"
+            );
+
+        } else {
+
+            button.classList.remove("is-saved");
+
+            button.querySelector(
+                ".explore-favourite-icon"
+            ).textContent = "♡";
+
+            button.setAttribute(
+                "aria-label",
+                "Save to favourites"
+            );
+
+        }
+
+    }
+
+
+    /* -----------------------------------------
+       LOAD SAVED PLACES
+       ----------------------------------------- */
+
+    if (user) {
+
+        const {
+            data: favourites,
+            error
+        } = await window.tnSupabase
+            .from("favourites")
+            .select("place_id")
+            .eq("user_id", user.id);
+
+
+        if (!error && favourites) {
+
+            const savedIds =
+                new Set(
+                    favourites.map(function (item) {
+                        return String(item.place_id);
+                    })
+                );
+
+
+            favouriteButtons.forEach(function (button) {
+
+                const placeId =
+                    String(button.dataset.placeId);
+
+                updateFavourite(
+                    button,
+                    savedIds.has(placeId)
+                );
+
+            });
+
+        }
+
+    }
+
+
+    /* -----------------------------------------
+       HEART CLICK
+       ----------------------------------------- */
+
+    favouriteButtons.forEach(function (button) {
+
+        button.addEventListener(
+            "click",
+            async function (event) {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+
+                if (!user) {
+
+                    window.location.href = "/login/";
+
+                    return;
+
+                }
+
+
+                const placeId =
+                    Number(button.dataset.placeId);
+
+
+                if (!placeId) return;
+
+
+                const isSaved =
+                    button.classList.contains("is-saved");
+
+
+                button.disabled = true;
+
+
+                if (isSaved) {
+
+                    const { error } =
+                        await window.tnSupabase
+                            .from("favourites")
+                            .delete()
+                            .eq("user_id", user.id)
+                            .eq("place_id", placeId);
+
+
+                    if (!error) {
+
+                        updateFavourite(
+                            button,
+                            false
+                        );
+
+                    }
+
+                } else {
+
+                    const { error } =
+                        await window.tnSupabase
+                            .from("favourites")
+                            .insert({
+                                user_id: user.id,
+                                place_id: placeId
+                            });
+
+
+                    if (!error) {
+
+                        updateFavourite(
+                            button,
+                            true
+                        );
+
+                    }
+
+                }
+
+
+                button.disabled = false;
+
+            }
+        );
+
+    });
+
+});
+
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", async function () {
+
+    const cards =
+        document.querySelectorAll(".explore-card");
+
+    if (!cards.length) return;
+
+    const {
+        data: ratings,
+        error
+    } = await window.tnSupabase
+        .from("place_rating_summary")
+        .select("place_id, average_rating, rating_count");
+
+    if (error) {
+        console.error("Explore ratings error:", error);
+        return;
+    }
+
+    const ratingsByPlace = {};
+
+    (ratings || []).forEach(function (rating) {
+
+        ratingsByPlace[String(rating.place_id)] = {
+            average: Number(rating.average_rating),
+            count: Number(rating.rating_count)
+        };
+
+    });
+
+    cards.forEach(function (card) {
+
+        const favouriteButton =
+            card.querySelector(".explore-favourite");
+
+        if (!favouriteButton) return;
+
+        const placeId =
+            String(favouriteButton.dataset.placeId);
+
+        const rating =
+            ratingsByPlace[placeId];
+
+        const content =
+            card.querySelector(".places-card-content");
+
+        if (!content) return;
+
+        const existingRating =
+            content.querySelector(".place-rating");
+
+if (!rating || rating.count === 0) {
+
+    const noRatingHtml = `
+        <div class="place-rating place-rating-empty">
+            <span class="place-rating-count">
+                No ratings yet
+            </span>
+        </div>
+    `;
+
+    if (existingRating) {
+
+        existingRating.outerHTML = noRatingHtml;
+
+    } else {
+
+        const title =
+            content.querySelector("h2");
+
+        if (title) {
+            title.insertAdjacentHTML(
+                "afterend",
+                noRatingHtml
+            );
+        }
+
+    }
+
+    return;
+
+}
+
+        const stars =
+            Array.from({ length: 5 }, function (_, index) {
+
+                return index + 1 <= rating.average
+                    ? "★"
+                    : "☆";
+
+            }).join("");
+
+        const ratingHtml = `
+            <div class="place-rating">
+                <span
+                    class="place-rating-stars"
+                    aria-label="${rating.average} out of 5 stars"
+                >
+                    ${stars}
+                </span>
+
+                <span class="place-rating-score">
+                    ${rating.average}
+                </span>
+
+                <span class="place-rating-count">
+                    (${rating.count})
+                </span>
+            </div>
+        `;
+
+        if (existingRating) {
+
+            existingRating.outerHTML = ratingHtml;
+
+        } else {
+
+            const title =
+                content.querySelector("h2");
+
+            if (title) {
+                title.insertAdjacentHTML(
+                    "afterend",
+                    ratingHtml
+                );
+            }
+
+        }
+
+    });
+
+});
+
+</script>

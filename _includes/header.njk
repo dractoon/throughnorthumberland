@@ -8,12 +8,181 @@
             <strong>northumberland</strong>
         </a>
 
-        <nav class="main-nav">
-            <a href="/">Explore</a>
-            <a href="/places/">Places</a>
-            <a href="#">Food &amp; Drink</a>
-            <a href="#">Stay</a>
+        <nav class="desktop-nav">
+            <a href="/explore/">Explore</a>
+            <a href="/explore/?category=harbours-coast,villages-towns,castles-history,nature-wildlife">Places</a>
+            <a href="/explore/?category=food-drink">Food &amp; Drink</a>
+            <a href="/explore/?category=places-to-stay">Stay</a>
         </nav>
+
+        <div class="header-account-wrap">
+
+            <a
+                href="/login/"
+                class="header-account"
+                id="header-account-button"
+                aria-label="Account"
+            >
+                <span class="header-account-icon" aria-hidden="true">
+                    <span class="user-icon-head"></span>
+                    <span class="user-icon-body"></span>
+                </span>
+
+                <span
+                    class="header-account-text"
+                    id="header-account-text"
+                >
+                    Account
+                </span>
+            </a>
+
+            <div
+                class="header-account-menu"
+                id="header-account-menu"
+                hidden
+            >
+                <a href="/account/">My Account</a>
+
+                <button
+                    type="button"
+                    id="header-logout"
+                >
+                    Log out
+                </button>
+            </div>
+
+        </div>
 
     </div>
 </header>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+
+    const accountButton =
+        document.getElementById("header-account-button");
+
+    const accountText =
+        document.getElementById("header-account-text");
+
+    const accountMenu =
+        document.getElementById("header-account-menu");
+
+    const logoutButton =
+        document.getElementById("header-logout");
+
+
+    if (
+        !accountButton ||
+        !accountText ||
+        !accountMenu ||
+        !logoutButton
+    ) {
+        return;
+    }
+
+
+    /* -----------------------------------------
+       CHECK LOGIN STATUS
+       ----------------------------------------- */
+
+    if (window.tnSupabase) {
+
+        const {
+            data: {
+                user
+            }
+        } = await window.tnSupabase.auth.getUser();
+
+
+        if (user) {
+
+            accountButton.href = "/account/";
+            accountText.textContent = "My Account";
+
+            accountButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+
+            accountButton.addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+
+                    const isOpen =
+                        !accountMenu.hidden;
+
+                    accountMenu.hidden = isOpen;
+
+                    accountButton.setAttribute(
+                        "aria-expanded",
+                        String(!isOpen)
+                    );
+
+                }
+            );
+
+        }
+
+    }
+
+
+    /* -----------------------------------------
+       LOG OUT
+       ----------------------------------------- */
+
+    logoutButton.addEventListener(
+        "click",
+        async function () {
+
+            if (!window.tnSupabase) {
+                return;
+            }
+
+            const {
+                error
+            } = await window.tnSupabase.auth.signOut();
+
+            if (!error) {
+
+                window.location.href = "/";
+
+            }
+
+        }
+    );
+
+
+    /* -----------------------------------------
+       CLOSE MENU WHEN CLICKING ELSEWHERE
+       ----------------------------------------- */
+
+    document.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                !accountMenu.hidden &&
+                !event.target.closest(
+                    ".header-account-wrap"
+                )
+            ) {
+
+                accountMenu.hidden = true;
+
+                accountButton.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+        }
+    );
+
+});
+</script>
