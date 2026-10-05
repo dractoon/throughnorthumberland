@@ -18,136 +18,94 @@ layout: base.njk
 
 
 <!-- ABOUT + MAP -->
+
+<!-- ABOUT -->
 <section class="place-section place-section-white place-about-section">
 
-    <div class="container place-about-grid">
+    <div class="container">
 
-        <!-- ABOUT -->
         <div class="place-about-content">
-<div class="place-title-row">
 
-    <div class="place-title-content">
+            <div class="place-title-row">
 
-        <h1>{{ place_data.title }}</h1>
+                <div class="place-title-content">
 
-        <div
-            class="place-rating"
-            id="place-rating"
-            data-place-id="{{ place_data.id }}"
-        >
+                    <span class="eyebrow">NORTHUMBERLAND</span>
 
-            {% if place_data.rating.count > 0 %}
+                    <h1>{{ place_data.title }}</h1>
 
-                <span class="place-rating-stars">
-                    {% for i in range(1, 6) %}
-                        {% if i <= place_data.rating.average %}
-                            ★
+                    <div
+                        class="place-rating"
+                        id="place-rating"
+                        data-place-id="{{ place_data.id }}"
+                    >
+
+                        {% if place_data.rating.count > 0 %}
+
+                            <span class="place-rating-stars">
+                                {% for i in range(1, 6) %}
+                                    {% if i <= place_data.rating.average %}
+                                        ★
+                                    {% else %}
+                                        ☆
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
+
+                            <span class="place-rating-score">
+                                {{ place_data.rating.average }}
+                            </span>
+
+                            <span class="place-rating-count">
+                                ({{ place_data.rating.count }})
+                            </span>
+
                         {% else %}
-                            ☆
+
+                            <span class="place-rating-no-ratings">
+                                No ratings yet
+                            </span>
+
                         {% endif %}
-                    {% endfor %}
-                </span>
 
-                <span class="place-rating-score">
-                    {{ place_data.rating.average }}
-                </span>
+                    </div>
 
-                <span class="place-rating-count">
-                    ({{ place_data.rating.count }})
-                </span>
+                </div>
 
-            {% else %}
+                <button
+                    type="button"
+                    class="place-favourite"
+                    id="place-favourite"
+                    data-place-id="{{ place_data.id }}"
+                    aria-label="Save {{ place_data.title }} to favourites"
+                >
+                    <span class="place-favourite-icon">♡</span>
+                    <span class="place-favourite-text">Save</span>
+                </button>
 
-                <span class="place-rating-no-ratings">
-                    No ratings yet
-                </span>
-
-            {% endif %}
-
-        </div>
-
-    </div>
-
-    <button
-        type="button"
-        class="place-favourite"
-        id="place-favourite"
-        data-place-id="{{ place_data.id }}"
-        aria-label="Save {{ place_data.title }} to favourites"
-    >
-        <span class="place-favourite-icon">♡</span>
-        <span class="place-favourite-text">Save</span>
-    </button>
-
-</div>
-        <div class="place-coordinates">
-            <span>LAT {{ place_data.latitude }}</span>
-            <span>LON {{ place_data.longitude }}</span>
-        </div>
-<div class="place-about-text">
-
-    {% if place_data.intro %}
-    <p class="place-about-intro">
-        {{ place_data.intro }}
-    </p>
-    {% endif %}
-
-    {% if place_data.overview %}
-    <p>
-        {{ place_data.overview }}
-    </p>
-    {% endif %}
-
-</div>
-
-        </div>
-
-        <!-- MAP -->
-        {% if place_data.latitude and place_data.longitude %}
-
-        <div class="place-about-map">
-            <div class="place-map-heading">
-                        {% if place_data.latitude and place_data.longitude %}
-        {% endif %}
             </div>
 
-            <div
-                id="place-map"
-                class="place-map"
-                data-latitude="{{ place_data.latitude }}"
-                data-longitude="{{ place_data.longitude }}"
-                data-title="{{ place_data.title }}"
-            ></div>
-                {% if place_data.getting_there %}
-    <div class="place-getting-there">
+            <div class="place-about-text">
 
-        <div class="place-getting-there-heading">
-            <div class="place-getting-there-icon">
-                <svg viewBox="0 0 20 20" aria-hidden="true">
-                    <path d="M5 17h14"></path>
-                    <path d="M7 17V8h10v9"></path>
-                    <path d="M9 8V5h6v3"></path>
-                    <circle cx="9" cy="17" r="1.5"></circle>
-                    <circle cx="15" cy="17" r="1.5"></circle>
-                </svg>
+                {% if place_data.intro %}
+                <p class="place-about-intro">
+                    {{ place_data.intro }}
+                </p>
+                {% endif %}
+
+                {% if place_data.overview %}
+                <p>
+                    {{ place_data.overview }}
+                </p>
+                {% endif %}
+
             </div>
 
-            <span class="eyebrow">GETTING THERE</span>
-
         </div>
-        <p>{{ place_data.getting_there }}</p>
-
-    </div>
-    {% endif %}
-
-        </div>
-
-        {% endif %}
 
     </div>
 
 </section>
-
 
 
     <!-- HIGHLIGHTS -->
@@ -193,9 +151,73 @@ layout: base.njk
         </div>
     </section>
 
+<!-- WHERE IS IT -->
+{% if place_data.latitude and place_data.longitude %}
+
+<section class="place-section place-section-white place-map-detail-section">
+
+    <div class="container">
+
+        <div class="place-section-heading">
+            <span class="eyebrow">WHERE IS IT?</span>
+            <h2>Find {{ place_data.title }}</h2>
+        </div>
+
+        <div
+            id="place-map"
+            class="place-map"
+            data-latitude="{{ place_data.latitude }}"
+            data-longitude="{{ place_data.longitude }}"
+            data-title="{{ place_data.title }}"
+        ></div>
+
+        {% if place_data.address or place_data.postcode %}
+        <div class="place-map-location">
+
+            {% if place_data.address %}
+            <span>{{ place_data.address }}</span>
+            {% endif %}
+
+            {% if place_data.postcode %}
+            <span>{{ place_data.postcode }}</span>
+            {% endif %}
+
+        </div>
+        {% endif %}
+
+        {% if place_data.getting_there %}
+        <div class="place-getting-there">
+
+            <div class="place-getting-there-heading">
+
+                <div class="place-getting-there-icon">
+                    <svg viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 17h14"></path>
+                        <path d="M7 17V8h10v9"></path>
+                        <path d="M9 8V5h6v3"></path>
+                        <circle cx="9" cy="17" r="1.5"></circle>
+                        <circle cx="15" cy="17" r="1.5"></circle>
+                    </svg>
+                </div>
+
+                <span class="eyebrow">GETTING THERE</span>
+
+            </div>
+
+            <p>{{ place_data.getting_there }}</p>
+
+        </div>
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endif %}
+
 
 <!-- AT A GLANCE -->
-<section class="place-section place-section-white">
+<section class="place-section place-section-alt">
 
     <div class="container">
 
@@ -206,37 +228,34 @@ layout: base.njk
 
         <div class="place-info-grid">
 
-            {% if place_data.address %}
-            <div class="place-info-card">
+<!-- ADDRESS -->
+{% if place_data.address or place_data.postcode %}
+<div class="place-info-card">
 
-                <div class="place-info-icon">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"></path>
-                        <circle cx="12" cy="9" r="2.5"></circle>
-                    </svg>
-                </div>
+    <div class="place-info-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"></path>
+            <circle cx="12" cy="9" r="2.5"></circle>
+        </svg>
+    </div>
 
-                <span class="place-info-label">ADDRESS</span>
-                <p>{{ place_data.address }}</p>
+    <span class="place-info-label">ADDRESS</span>
 
-            </div>
-            {% endif %}
+    <p>
+        {% if place_data.address %}
+            {{ place_data.address }}
+        {% endif %}
 
-            {% if place_data.postcode %}
-            <div class="place-info-card">
+        {% if place_data.postcode %}
+            {% if place_data.address %}<br>{% endif %}
+            {{ place_data.postcode }}
+        {% endif %}
+    </p>
 
-                <div class="place-info-icon">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <rect x="4" y="4" width="16" height="16" rx="2"></rect>
-                        <path d="M8 8h8M8 12h8M8 16h5"></path>
-                    </svg>
-                </div>
+</div>
+{% endif %}
 
-                <span class="place-info-label">POSTCODE</span>
-                <p>{{ place_data.postcode }}</p>
-
-            </div>
-            {% endif %}
+<!-- PARKING -->
 
             {% if place_data.parking %}
             <div class="place-info-card">
@@ -254,6 +273,8 @@ layout: base.njk
             </div>
             {% endif %}
 
+<!-- BEST TIME TO VISIT -->
+
             {% if place_data.best_time %}
             <div class="place-info-card">
 
@@ -269,6 +290,8 @@ layout: base.njk
 
             </div>
             {% endif %}
+
+<!-- DOG FRIENDLY -->
 
             {% if place_data.dog_friendly %}
             <div class="place-info-card">
@@ -288,6 +311,8 @@ layout: base.njk
             </div>
             {% endif %}
 
+<!-- FAMILY FRIENDLY -->
+
             {% if place_data.family_friendly %}
             <div class="place-info-card">
 
@@ -305,6 +330,8 @@ layout: base.njk
 
             </div>
             {% endif %}
+
+<!-- ACCESSIBILITY -->
 
             {% if place_data.accessibility %}
             <div class="place-info-card">
@@ -325,6 +352,8 @@ layout: base.njk
             </div>
             {% endif %}
 
+<!-- TOILETS -->
+
             {% if place_data.toilets %}
             <div class="place-info-card">
 
@@ -343,6 +372,8 @@ layout: base.njk
             </div>
             {% endif %}
 
+<!-- OPENING HOURS -->
+
             {% if place_data.opening_hours %}
             <div class="place-info-card">
 
@@ -358,6 +389,8 @@ layout: base.njk
 
             </div>
             {% endif %}
+
+<!-- WEBSITE -->
 
             {% if place_data.website %}
             <div class="place-info-card">
@@ -391,10 +424,11 @@ layout: base.njk
 
 </section>
 
+
 <!-- WHILE YOU'RE HERE -->
 {% if place_data.nearby and place_data.nearby.length %}
 
-<section class="place-section place-section-alt place-nearby-section">
+<section class="place-section place-section-white place-nearby-section">
 
     <div class="container">
 
@@ -426,15 +460,6 @@ layout: base.njk
 </section>
 
 {% endif %}
-
-    <!-- BACK TO PLACES -->
-    <section class="place-bottom">
-        <div class="container">
-            <a href="/explore/" class="back-link">
-                ← Back to Explore
-            </a>
-        </div>
-    </section>
 
 </article>
 

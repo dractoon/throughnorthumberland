@@ -38,92 +38,41 @@ description: Discover the best places, beaches, walks, food and things to do acr
     </div>
 
 </div>
-
 </section>
 
+<!-- MAP INTRO -->
 
-<!-- CATEGORIES -->
-
-<section class="categories section">
+<section class="map-section section">
     <div class="container">
 
-    <div class="section-heading">
-        <div>
-            <p class="eyebrow">EXPLORE</p>
-            <h2>What are you looking for?</h2>
+    <div class="map-card">
+
+        <div class="map-content">
+            <p class="eyebrow">EXPLORE THE MAP</p>
+
+            <h2>
+                See what's
+                <span>around you.</span>
+            </h2>
+
+            <p>
+                Explore Northumberland on the map and discover places to eat, stay, walk and visit.
+            </p>
+
+            <a href="/explore/" class="primary-button">
+                Explore the map
+                <span>→</span>
+            </a>
         </div>
+        <div id="northumberland-map" class="interactive-map"></div>
     </div>
 
-       <div class="category-grid">
-
-            <a href="/explore/?category=harbours-coast,villages-towns,castles-history,nature-wildlife" class="category-card category-places">
-                <div class="category-icon">
-                    <img src="/assets/icons/places.png" alt="">
-                </div>
-                <div>
-                    <h3>Places</h3>
-                    <p>Towns, villages &amp; landmarks</p>
-                </div>
-            </a>
-
-            <a href="/explore/?category=food-drink" class="category-card category-food">
-                <div class="category-icon">
-                    <img src="/assets/icons/food-drink.png" alt="">
-                </div>
-                <div>
-                    <h3>Food &amp; Drink</h3>
-                    <p>Cafés, restaurants &amp; pubs</p>
-                </div>
-            </a>
-
-            <a href="/explore/?category=beaches" class="category-card category-beaches">
-                <div class="category-icon">
-                    <img src="/assets/icons/beaches.png" alt="">
-                </div>
-                <div>
-                    <h3>Beaches</h3>
-                    <p>Coastline, sea &amp; sand</p>
-                </div>
-            </a>
-
-            <a href="/explore/?category=walks-trails" class="category-card category-walks">
-                <div class="category-icon">
-                    <img src="/assets/icons/walks.png" alt="">
-                </div>
-                <div>
-                    <h3>Walks</h3>
-                    <p>Trails, hills &amp; countryside</p>
-                </div>
-            </a>
-
-            <a href="/explore/?category=places-to-stay" class="category-card category-stay">
-                <div class="category-icon">
-                    <img src="/assets/icons/stay.png" alt="">
-                </div>
-                <div>
-                    <h3>Stay</h3>
-                    <p>Hotels, cottages &amp; campsites</p>
-                </div>
-            </a>
-
-            <a href="/explore/?category=Things-to-do" class="category-card category-things">
-                <div class="category-icon">
-                    <img src="/assets/icons/things-to-do.png" alt="">
-                </div>
-                <div>
-                    <h3>Things to do</h3>
-                    <p>Activities &amp; experiences</p>
-                </div>
-            </a>
-
-        </div> 
 </div>
-
 </section>
 
 <!-- FEATURED PLACES -->
 
-<section class="featured section">
+<section class="featured section place-section-white">
     <div class="container">
 
     <div class="section-heading section-heading-row">
@@ -182,35 +131,6 @@ description: Discover the best places, beaches, walks, food and things to do acr
 
 </section>
 
-<!-- MAP INTRO -->
-
-<section class="map-section section">
-    <div class="container">
-
-    <div class="map-card">
-
-        <div class="map-content">
-            <p class="eyebrow">EXPLORE THE MAP</p>
-
-            <h2>
-                See what's
-                <span>around you.</span>
-            </h2>
-
-            <p>
-                Explore Northumberland on the map and discover places to eat, stay, walk and visit.
-            </p>
-
-            <a href="#" class="primary-button">
-                Explore the map
-                <span>→</span>
-            </a>
-        </div>
-        <div id="northumberland-map" class="interactive-map"></div>
-    </div>
-
-</div>
-</section>
 <link rel="stylesheet" href="/assets/leaflet.css">
 
 <script src="/assets/leaflet.js"></script>
@@ -282,61 +202,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-    const mapElement = document.getElementById("northumberland-map");
-
-    if (!mapElement) return;
-
-    const map = L.map("northumberland-map");
-
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-
-    const places = [
-        {% for key, place in places %}
-            {% if place.status == "published" and place.latitude and place.longitude %}
-            {
-                title: {{ place.title | dump | safe }},
-                slug: {{ key | dump | safe }},
-                latitude: {{ place.latitude }},
-                longitude: {{ place.longitude }}
-            },
-            {% endif %}
-        {% endfor %}
-    ];
-
-    const bounds = [];
-
-    places.forEach(function (place) {
-
-        const marker = L.marker([
-            place.latitude,
-            place.longitude
-        ]).addTo(map);
-
-        marker.bindPopup(`
-            <strong>${place.title}</strong><br>
-            <a href="/places/${place.slug}/">View place →</a>
-        `);
-
-        bounds.push([
-            place.latitude,
-            place.longitude
-        ]);
-    });
-
-    if (bounds.length > 0) {
-        map.fitBounds(bounds, {
-            padding: [40, 40]
-        });
-    } else {
-        map.setView([55.2, -1.7], 9);
-    }
-
-});
-</script>
-
