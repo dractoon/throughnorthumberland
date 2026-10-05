@@ -208,8 +208,8 @@ document.addEventListener("DOMContentLoaded", function () {
         10
     );
 
-L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}.png', {
-    attribution: '&copy; Stadia Maps &copy; OpenStreetMap contributors'
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
     const places = [];
