@@ -226,116 +226,74 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 <!-- ABOUT + MAP -->
+
+<!-- ABOUT -->
 <section class="place-section place-section-white place-about-section">
 
-    <div class="container place-about-grid">
+    <div class="container">
 
-        <!-- ABOUT -->
         <div class="place-about-content">
-<div class="place-title-row">
 
-    <div class="place-title-content">
+            <div class="place-title-row">
 
-        <h1>Craster</h1>
+                <div class="place-title-content">
 
-        <div
-            class="place-rating"
-            id="place-rating"
-            data-place-id="2"
-        >
+                    <span class="eyebrow">NORTHUMBERLAND</span>
 
-            
+                    <h1>Craster</h1>
 
-                <span class="place-rating-no-ratings">
-                    No ratings yet
-                </span>
+                    <div
+                        class="place-rating"
+                        id="place-rating"
+                        data-place-id="2"
+                    >
 
-            
-
-        </div>
-
-    </div>
-
-    <button
-        type="button"
-        class="place-favourite"
-        id="place-favourite"
-        data-place-id="2"
-        aria-label="Save Craster to favourites"
-    >
-        <span class="place-favourite-icon">♡</span>
-        <span class="place-favourite-text">Save</span>
-    </button>
-
-</div>
-        <div class="place-coordinates">
-            <span>LAT 55.4796</span>
-            <span>LON -1.5934</span>
-        </div>
-<div class="place-about-text">
-
-    
-    <p class="place-about-intro">
-        Craster is one of Northumberland&#39;s most characterful coastal villages. With its working harbour, rugged coastline and views towards Dunstanburgh Castle, it is a great place to experience some of the county&#39;s most dramatic scenery.
-    </p>
-    
-
-    
-    <p>
-        Craster is best known for its small harbour, traditional fishing heritage and famous smoked kippers. The village is also the starting point for one of Northumberland&#39;s most popular coastal walks, following the shoreline towards the ruins of Dunstanburgh Castle. With sea views, rocky coastline and open countryside, Craster is an excellent place to explore on foot and enjoy a slower pace.
-    </p>
-    
-
-</div>
-
-        </div>
-
-        <!-- MAP -->
-        
-
-        <div class="place-about-map">
-            <div class="place-map-heading">
                         
-        
+
+                            <span class="place-rating-no-ratings">
+                                No ratings yet
+                            </span>
+
+                        
+
+                    </div>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="place-favourite"
+                    id="place-favourite"
+                    data-place-id="2"
+                    aria-label="Save Craster to favourites"
+                >
+                    <span class="place-favourite-icon">♡</span>
+                    <span class="place-favourite-text">Save</span>
+                </button>
+
             </div>
 
-            <div
-                id="place-map"
-                class="place-map"
-                data-latitude="55.4796"
-                data-longitude="-1.5934"
-                data-title="Craster"
-            ></div>
+            <div class="place-about-text">
+
                 
-    <div class="place-getting-there">
+                <p class="place-about-intro">
+                    Craster is one of Northumberland&#39;s most characterful coastal villages. With its working harbour, rugged coastline and views towards Dunstanburgh Castle, it is a great place to experience some of the county&#39;s most dramatic scenery.
+                </p>
+                
 
-        <div class="place-getting-there-heading">
-            <div class="place-getting-there-icon">
-                <svg viewBox="0 0 20 20" aria-hidden="true">
-                    <path d="M5 17h14"></path>
-                    <path d="M7 17V8h10v9"></path>
-                    <path d="M9 8V5h6v3"></path>
-                    <circle cx="9" cy="17" r="1.5"></circle>
-                    <circle cx="15" cy="17" r="1.5"></circle>
-                </svg>
+                
+                <p>
+                    Craster is best known for its small harbour, traditional fishing heritage and famous smoked kippers. The village is also the starting point for one of Northumberland&#39;s most popular coastal walks, following the shoreline towards the ruins of Dunstanburgh Castle. With sea views, rocky coastline and open countryside, Craster is an excellent place to explore on foot and enjoy a slower pace.
+                </p>
+                
+
             </div>
 
-            <span class="eyebrow">GETTING THERE</span>
-
         </div>
-        <p>Craster is on the Northumberland coast, around 8 miles east of Alnwick. It is easiest to reach by car, with access from the A1 and local roads through Embleton and nearby villages. There is no railway station in Craster, so travelling by car is generally the most practical option.</p>
-
-    </div>
-    
-
-        </div>
-
-        
 
     </div>
 
 </section>
-
 
 
     <!-- HIGHLIGHTS -->
@@ -356,9 +314,61 @@ document.addEventListener("DOMContentLoaded", async function () {
         </div>
     </section>
 
+<!-- WHERE IS IT -->
+
+
+<section class="place-section place-section-white place-map-detail-section">
+
+    <div class="container">
+
+        <div class="place-section-heading">
+            <span class="eyebrow">WHERE IS IT?</span>
+            <h2>Find Craster</h2>
+        </div>
+
+        <div
+            id="place-map"
+            class="place-map"
+            data-latitude="55.4796"
+            data-longitude="-1.5934"
+            data-title="Craster"
+        ></div>
+
+        
+
+        
+        <div class="place-getting-there">
+
+            <div class="place-getting-there-heading">
+
+                <div class="place-getting-there-icon">
+                    <svg viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 17h14"></path>
+                        <path d="M7 17V8h10v9"></path>
+                        <path d="M9 8V5h6v3"></path>
+                        <circle cx="9" cy="17" r="1.5"></circle>
+                        <circle cx="15" cy="17" r="1.5"></circle>
+                    </svg>
+                </div>
+
+                <span class="eyebrow">GETTING THERE</span>
+
+            </div>
+
+            <p>Craster is on the Northumberland coast, around 8 miles east of Alnwick. It is easiest to reach by car, with access from the A1 and local roads through Embleton and nearby villages. There is no railway station in Craster, so travelling by car is generally the most practical option.</p>
+
+        </div>
+        
+
+    </div>
+
+</section>
+
+
+
 
 <!-- AT A GLANCE -->
-<section class="place-section place-section-white">
+<section class="place-section place-section-alt">
 
     <div class="container">
 
@@ -369,9 +379,10 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         <div class="place-info-grid">
 
-            
+<!-- ADDRESS -->
 
-            
+
+<!-- PARKING -->
 
             
             <div class="place-info-card">
@@ -389,6 +400,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             </div>
             
 
+<!-- BEST TIME TO VISIT -->
+
             
             <div class="place-info-card">
 
@@ -405,15 +418,27 @@ document.addEventListener("DOMContentLoaded", async function () {
             </div>
             
 
-            
+<!-- DOG FRIENDLY -->
 
             
 
-            
+<!-- FAMILY FRIENDLY -->
 
             
 
+<!-- ACCESSIBILITY -->
+
             
+
+<!-- TOILETS -->
+
+            
+
+<!-- OPENING HOURS -->
+
+            
+
+<!-- WEBSITE -->
 
             
 
@@ -422,17 +447,9 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 </section>
 
+
 <!-- WHILE YOU'RE HERE -->
 
-
-    <!-- BACK TO PLACES -->
-    <section class="place-bottom">
-        <div class="container">
-            <a href="/explore/" class="back-link">
-                ← Back to Explore
-            </a>
-        </div>
-    </section>
 
 </article>
 

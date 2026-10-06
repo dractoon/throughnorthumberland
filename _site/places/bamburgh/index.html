@@ -226,118 +226,76 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 <!-- ABOUT + MAP -->
+
+<!-- ABOUT -->
 <section class="place-section place-section-white place-about-section">
 
-    <div class="container place-about-grid">
+    <div class="container">
 
-        <!-- ABOUT -->
         <div class="place-about-content">
-<div class="place-title-row">
 
-    <div class="place-title-content">
+            <div class="place-title-row">
 
-        <h1>Bamburgh</h1>
+                <div class="place-title-content">
 
-        <div
-            class="place-rating"
-            id="place-rating"
-            data-place-id="1"
-        >
+                    <span class="eyebrow">NORTHUMBERLAND</span>
 
-            
+                    <h1>Bamburgh</h1>
 
-                <span class="place-rating-no-ratings">
-                    No ratings yet
-                </span>
+                    <div
+                        class="place-rating"
+                        id="place-rating"
+                        data-place-id="1"
+                    >
 
-            
+                        
 
-        </div>
+                            <span class="place-rating-no-ratings">
+                                No ratings yet
+                            </span>
 
-    </div>
+                        
 
-    <button
-        type="button"
-        class="place-favourite"
-        id="place-favourite"
-        data-place-id="1"
-        aria-label="Save Bamburgh to favourites"
-    >
-        <span class="place-favourite-icon">♡</span>
-        <span class="place-favourite-text">Save</span>
-    </button>
+                    </div>
 
-</div>
-        <div class="place-coordinates">
-            <span>LAT 55.606</span>
-            <span>LON -1.709</span>
-        </div>
-<div class="place-about-text">
+                </div>
 
-    
-    <p class="place-about-intro">
-        Bamburgh is one of Northumberland&#39;s most recognisable coastal villages, where a magnificent castle, huge sandy beach and centuries of history come together in one unforgettable setting.
-    </p>
-    
+                <button
+                    type="button"
+                    class="place-favourite"
+                    id="place-favourite"
+                    data-place-id="1"
+                    aria-label="Save Bamburgh to favourites"
+                >
+                    <span class="place-favourite-icon">♡</span>
+                    <span class="place-favourite-text">Save</span>
+                </button>
 
-    
-    <p>
-        Set high above the Northumberland coast, Bamburgh is one of the county&#39;s most iconic places to visit. The village is dominated by Bamburgh Castle, perched dramatically on a rocky outcrop overlooking the sea, while Bamburgh Beach stretches away beneath the dunes.
+            </div>
+
+            <div class="place-about-text">
+
+                
+                <p class="place-about-intro">
+                    Bamburgh is one of Northumberland&#39;s most recognisable coastal villages, where a magnificent castle, huge sandy beach and centuries of history come together in one unforgettable setting.
+                </p>
+                
+
+                
+                <p>
+                    Set high above the Northumberland coast, Bamburgh is one of the county&#39;s most iconic places to visit. The village is dominated by Bamburgh Castle, perched dramatically on a rocky outcrop overlooking the sea, while Bamburgh Beach stretches away beneath the dunes.
 
 Explore the castle and its grounds, discover the story of Grace Darling, wander through the village, or simply walk the beach with views towards Holy Island and the Farne Islands. There are also cafés, pubs, shops and family-friendly attractions, making Bamburgh an easy place to spend anything from a couple of hours to a full day.
-    </p>
-    
-
-</div>
-
-        </div>
-
-        <!-- MAP -->
-        
-
-        <div class="place-about-map">
-            <div class="place-map-heading">
-                        
-        
-            </div>
-
-            <div
-                id="place-map"
-                class="place-map"
-                data-latitude="55.606"
-                data-longitude="-1.709"
-                data-title="Bamburgh"
-            ></div>
+                </p>
                 
-    <div class="place-getting-there">
 
-        <div class="place-getting-there-heading">
-            <div class="place-getting-there-icon">
-                <svg viewBox="0 0 20 20" aria-hidden="true">
-                    <path d="M5 17h14"></path>
-                    <path d="M7 17V8h10v9"></path>
-                    <path d="M9 8V5h6v3"></path>
-                    <circle cx="9" cy="17" r="1.5"></circle>
-                    <circle cx="15" cy="17" r="1.5"></circle>
-                </svg>
             </div>
 
-            <span class="eyebrow">GETTING THERE</span>
-
         </div>
-        <p>Bamburgh is easiest to reach by car via the A1. From the north, leave the A1 at Adderstone Services and follow the B1341 towards the coast. From the south, leave the A1 at Alnwick and follow the B1340 or B1342 towards Bamburgh. Buses also serve the village from surrounding towns including Alnwick and Berwick-upon-Tweed.</p>
-
-    </div>
-    
-
-        </div>
-
-        
 
     </div>
 
 </section>
-
 
 
     <!-- HIGHLIGHTS -->
@@ -433,9 +391,73 @@ Explore the castle and its grounds, discover the story of Grace Darling, wander 
         </div>
     </section>
 
+<!-- WHERE IS IT -->
+
+
+<section class="place-section place-section-white place-map-detail-section">
+
+    <div class="container">
+
+        <div class="place-section-heading">
+            <span class="eyebrow">WHERE IS IT?</span>
+            <h2>Find Bamburgh</h2>
+        </div>
+
+        <div
+            id="place-map"
+            class="place-map"
+            data-latitude="55.606"
+            data-longitude="-1.709"
+            data-title="Bamburgh"
+        ></div>
+
+        
+        <div class="place-map-location">
+
+            
+            <span>Bamburgh, Northumberland</span>
+            
+
+            
+            <span>NE69 7AE</span>
+            
+
+        </div>
+        
+
+        
+        <div class="place-getting-there">
+
+            <div class="place-getting-there-heading">
+
+                <div class="place-getting-there-icon">
+                    <svg viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M5 17h14"></path>
+                        <path d="M7 17V8h10v9"></path>
+                        <path d="M9 8V5h6v3"></path>
+                        <circle cx="9" cy="17" r="1.5"></circle>
+                        <circle cx="15" cy="17" r="1.5"></circle>
+                    </svg>
+                </div>
+
+                <span class="eyebrow">GETTING THERE</span>
+
+            </div>
+
+            <p>Bamburgh is easiest to reach by car via the A1. From the north, leave the A1 at Adderstone Services and follow the B1341 towards the coast. From the south, leave the A1 at Alnwick and follow the B1340 or B1342 towards Bamburgh. Buses also serve the village from surrounding towns including Alnwick and Berwick-upon-Tweed.</p>
+
+        </div>
+        
+
+    </div>
+
+</section>
+
+
+
 
 <!-- AT A GLANCE -->
-<section class="place-section place-section-white">
+<section class="place-section place-section-alt">
 
     <div class="container">
 
@@ -446,37 +468,34 @@ Explore the castle and its grounds, discover the story of Grace Darling, wander 
 
         <div class="place-info-grid">
 
-            
-            <div class="place-info-card">
+<!-- ADDRESS -->
 
-                <div class="place-info-icon">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"></path>
-                        <circle cx="12" cy="9" r="2.5"></circle>
-                    </svg>
-                </div>
+<div class="place-info-card">
 
-                <span class="place-info-label">ADDRESS</span>
-                <p>Bamburgh, Northumberland</p>
+    <div class="place-info-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"></path>
+            <circle cx="12" cy="9" r="2.5"></circle>
+        </svg>
+    </div>
 
-            </div>
-            
+    <span class="place-info-label">ADDRESS</span>
 
-            
-            <div class="place-info-card">
+    <p>
+        
+            Bamburgh, Northumberland
+        
 
-                <div class="place-info-icon">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <rect x="4" y="4" width="16" height="16" rx="2"></rect>
-                        <path d="M8 8h8M8 12h8M8 16h5"></path>
-                    </svg>
-                </div>
+        
+            <br>
+            NE69 7AE
+        
+    </p>
 
-                <span class="place-info-label">POSTCODE</span>
-                <p>NE69 7AE</p>
+</div>
 
-            </div>
-            
+
+<!-- PARKING -->
 
             
             <div class="place-info-card">
@@ -494,6 +513,8 @@ Explore the castle and its grounds, discover the story of Grace Darling, wander 
             </div>
             
 
+<!-- BEST TIME TO VISIT -->
+
             
             <div class="place-info-card">
 
@@ -509,6 +530,8 @@ Explore the castle and its grounds, discover the story of Grace Darling, wander 
 
             </div>
             
+
+<!-- DOG FRIENDLY -->
 
             
             <div class="place-info-card">
@@ -528,6 +551,8 @@ Explore the castle and its grounds, discover the story of Grace Darling, wander 
             </div>
             
 
+<!-- FAMILY FRIENDLY -->
+
             
             <div class="place-info-card">
 
@@ -545,6 +570,8 @@ Explore the castle and its grounds, discover the story of Grace Darling, wander 
 
             </div>
             
+
+<!-- ACCESSIBILITY -->
 
             
             <div class="place-info-card">
@@ -565,6 +592,8 @@ Explore the castle and its grounds, discover the story of Grace Darling, wander 
             </div>
             
 
+<!-- TOILETS -->
+
             
             <div class="place-info-card">
 
@@ -583,6 +612,8 @@ Explore the castle and its grounds, discover the story of Grace Darling, wander 
             </div>
             
 
+<!-- OPENING HOURS -->
+
             
             <div class="place-info-card">
 
@@ -598,6 +629,8 @@ Explore the castle and its grounds, discover the story of Grace Darling, wander 
 
             </div>
             
+
+<!-- WEBSITE -->
 
             
             <div class="place-info-card">
@@ -631,10 +664,11 @@ Explore the castle and its grounds, discover the story of Grace Darling, wander 
 
 </section>
 
+
 <!-- WHILE YOU'RE HERE -->
 
 
-<section class="place-section place-section-alt place-nearby-section">
+<section class="place-section place-section-white place-nearby-section">
 
     <div class="container">
 
@@ -726,15 +760,6 @@ Explore the castle and its grounds, discover the story of Grace Darling, wander 
 </section>
 
 
-
-    <!-- BACK TO PLACES -->
-    <section class="place-bottom">
-        <div class="container">
-            <a href="/explore/" class="back-link">
-                ← Back to Explore
-            </a>
-        </div>
-    </section>
 
 </article>
 
