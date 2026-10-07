@@ -1,5 +1,11 @@
 require("dotenv").config();
+
 module.exports = function(eleventyConfig) {
+
+    eleventyConfig.addGlobalData(
+        "cartoKey",
+        process.env.CARTO_KEY || ""
+    );
 
     eleventyConfig.addPassthroughCopy("assets");
     eleventyConfig.addPassthroughCopy("styles.css");

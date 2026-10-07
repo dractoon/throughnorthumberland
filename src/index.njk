@@ -155,9 +155,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const map = L.map("northumberland-map");
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png?key={{ cartoKey }}", {
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+}).addTo(map);
 
     const places = [
         {% for key, place in places %}

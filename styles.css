@@ -2512,36 +2512,18 @@ button {
 }
 
 /* =========================================================
-   EXPLORE CARD ACTIVE STATE
+   EXPLORE CARDS
    ========================================================= */
 
 .explore-card {
-    transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.explore-card.active {
-    opacity: 1;
+    min-width: 0;
+    transition:
+        transform 0.25s ease,
+        opacity 0.25s ease;
 }
 
 .explore-card:hover {
-    transform: translateY(-3px);
-}
-
-.explore-card.active .places-card-image {
-    outline: 3px solid var(--green);
-    outline-offset: 3px;
-}
-
-.explore-card.active .places-card-content h2 {
-    color: var(--green);
-}
-
-.explore-card .places-card-image img {
-    transition: transform 0.35s ease;
-}
-
-.explore-card:hover .places-card-image img {
-    transform: scale(1.03);
+    transform: translateY(-4px);
 }
 
 .explore-card-select {
@@ -2551,15 +2533,175 @@ button {
     cursor: pointer;
 }
 
+/* IMAGE */
+
+.explore-card .places-card-image {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    margin-bottom: 18px;
+    border-radius: 20px;
+    background: #e9e6dd;
+    box-shadow: 0 8px 24px rgba(32, 37, 34, 0.07);
+}
+
+.explore-card .places-card-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.explore-card:hover .places-card-image img {
+    transform: scale(1.035);
+}
+
+/* FAVOURITE */
+
+.explore-favourite {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 2;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.94);
+    color: var(--dark);
+
+    box-shadow: 0 5px 16px rgba(32, 37, 34, 0.12);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.explore-favourite:hover {
+    transform: scale(1.06);
+    background: #ffffff;
+}
+
+.explore-favourite-icon {
+    font-size: 21px;
+    line-height: 1;
+}
+
+/* CONTENT */
+
+.explore-card .places-card-content {
+    padding: 0 2px;
+}
+
+.explore-card .places-card-meta {
+    margin-bottom: 7px;
+}
+
+.explore-card .places-card-meta span {
+    color: var(--green);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+}
+
+.explore-card .places-card-content h2 {
+    margin: 0 0 8px;
+    color: var(--dark);
+    font-size: 21px;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
+    transition: color 0.2s ease;
+}
+
+.explore-card:hover .places-card-content h2 {
+    color: var(--green);
+}
+
+/* RATING */
+
+.explore-card .place-rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.explore-card .place-rating-stars {
+    color: var(--yellow);
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.explore-card .place-rating-score {
+    color: var(--dark);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.explore-card .place-rating-count {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* DESCRIPTION */
+
+.explore-card .places-card-content > p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.65;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* VIEW BUTTON */
+
 .explore-view-place {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    margin-top: 12px;
-    color: var(--green);
-    font-size: 12px;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 38px;
+    margin-top: 16px;
+    padding: 0 15px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: var(--dark);
+
+    font-size: 11px;
     font-weight: 700;
     text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.explore-view-place:hover {
+    border-color: var(--green);
+    background: var(--green);
+    color: #ffffff;
+    transform: translateY(-1px);
 }
 
 .explore-view-place span {
@@ -2568,6 +2710,17 @@ button {
 
 .explore-view-place:hover span {
     transform: translateX(3px);
+}
+
+/* SELECTED CARD */
+
+.explore-card.active .places-card-image {
+    outline: 3px solid var(--green);
+    outline-offset: 3px;
+}
+
+.explore-card.active .places-card-content h2 {
+    color: var(--green);
 }
 
 /* =========================================================

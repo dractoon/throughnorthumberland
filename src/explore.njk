@@ -208,8 +208,8 @@ document.addEventListener("DOMContentLoaded", function () {
         10
     );
 
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: '&copy; OpenStreetMap contributors'
+L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}.png?key={{ cartoKey }}", {
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
 }).addTo(map);
 
     const places = [];
